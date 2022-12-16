@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,8 +33,12 @@ public class ProductDao {
         session.beginTransaction();
 
         Criteria cr = session.createCriteria(Product.class);
+        List<Product> productList = new ArrayList<Product>(cr.list());
 
-        return cr.list();
+        session.getTransaction().commit();
+        session.close();
+
+        return productList;
 
 
     }

@@ -8,7 +8,7 @@
         <!--    username-->
         <property name="hibernate.connection.username">root</property>
         <!--    password-->
-        <property name="hibernate.connection.password">Feelslikedope</property>
+        <property name="hibernate.connection.password">12345</property>
         <!--    mysql driver-->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
 

@@ -15,6 +15,7 @@
 
                     <table class="table">
                         <thead class="thead-dark">
+
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Product Name</th>
@@ -24,31 +25,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
 
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <c:forEach items="${products }" var="p">
+                            <tr>
+                                <th scope="row">${p.id}</th>
+                                <td>${p.name}</td>
+                                <td>${p.description}</td>
+                                <td>${p.price}</td>
+                            </tr>
+                        </c:forEach>
+
                         </tbody>
                     </table>
 
