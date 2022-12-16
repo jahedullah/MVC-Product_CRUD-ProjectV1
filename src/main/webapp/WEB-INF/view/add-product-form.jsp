@@ -30,8 +30,7 @@
                             <textarea class="form-control"
                                       id="description"
                                       name="description"
-                                      placeholder="Enter product description">
-                            </textarea>
+                                      placeholder="Enter product description" ></textarea>
 
                         </div>
 

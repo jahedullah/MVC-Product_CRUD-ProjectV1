@@ -28,10 +28,15 @@
 
                         <c:forEach items="${products }" var="p">
                             <tr>
-                                <th scope="row">${p.id}</th>
+                                <th scope="row">TECH-PRODUCT-${p.id}</th>
                                 <td>${p.name}</td>
                                 <td>${p.description}</td>
-                                <td>${p.price}</td>
+                                <td class="font-weight-bold">&#2547; ${p.price}</td>
+                                <td>
+                                    <a href="delete/${p.id}"><i class="fa fa-trash text-danger" style="font-size: 20px;" aria-hidden="true"></i></a>
+                                    <a href="update/${p.id}"><i class="fa fa-wrench text-primary" aria-hidden="true" style="font-size: 20px;"></i></a>
+                                </td>
+
                             </tr>
                         </c:forEach>
 
