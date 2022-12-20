@@ -1,8 +1,6 @@
-package com.Jahedullah.ProjectV1.configuration;
+package com.Jahedullah.ProjectV1.projectConfiguration;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import java.lang.reflect.Array;
 
 public class ProjectConfigInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override

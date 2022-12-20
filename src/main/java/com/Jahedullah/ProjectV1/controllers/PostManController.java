@@ -5,6 +5,7 @@ import com.Jahedullah.ProjectV1.Dao.ProductDao;
 import com.Jahedullah.ProjectV1.models.PostmanProduct;
 import com.Jahedullah.ProjectV1.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/postman",method = RequestMethod.GET)
 public class PostManController {
+    @Autowired
+    private Product product;
     @Autowired
     private ProductDao productDao;
 
@@ -33,11 +36,11 @@ public class PostManController {
 ////        return new ResponseEntity<>(postmanProductDao.getProducts(), HttpStatus.ACCEPTED);
 //        return postmanProduct;
 //    }
-    @GetMapping (value = "/productswithid", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> getProducts(){
+    @GetMapping (value = "/productswithid/{courseId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Product> getProducts(@PathVariable int courseId){
 
 //        return new ResponseEntity<>(postmanProductDao.getProducts(), HttpStatus.ACCEPTED);
-        Product product = productDao.getProduct(13);
+        Product product = productDao.getProduct(courseId);
         return ResponseEntity.ok(product);
     }
 
@@ -48,4 +51,31 @@ public class PostManController {
         List<Product> productsList = productDao.getProducts();
         return ResponseEntity.ok(productsList);
     }
+    @PostMapping(value = "/addproduct")
+    public String addProduct(@RequestBody Product product){
+        productDao.createProduct(product);
+        return "Course has been added successfully.";
+    }
+
+    @PutMapping("/updateproduct/{courseId}")
+        public String updateProduct(@PathVariable int courseId, @RequestBody Product productToUpdate){
+        Product productCatch = productDao.getProduct(courseId);
+        productCatch.setName(productToUpdate.getName());
+        productCatch.setDescription(productToUpdate.getDescription());
+        productCatch.setPrice(productToUpdate.getPrice());
+        productDao.updateProduct(productCatch);
+        return "Course has been updated successfully";
+    }
+
+    @DeleteMapping("/deleteproduct/{courseId}")
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int courseId){
+        try {
+            productDao.deleteProduct(courseId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }
+
