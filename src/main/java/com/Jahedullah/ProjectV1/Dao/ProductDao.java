@@ -16,10 +16,7 @@ import java.util.List;
 @Component
 public class ProductDao {
 
-
-
     //creating Products here
-
     public void createProduct(Product product){
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
@@ -30,6 +27,7 @@ public class ProductDao {
 
     //get all Products
     public List<Product> getProducts(){
+
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
 

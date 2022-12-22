@@ -14,6 +14,8 @@ import java.util.List;
 @Controller
 public class FrontController {
     @Autowired
+    Product product;
+    @Autowired
     private ProductDao productDao;
 
 

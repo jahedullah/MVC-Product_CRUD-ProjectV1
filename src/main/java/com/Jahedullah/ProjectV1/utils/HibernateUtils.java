@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.utils;
 
 import com.Jahedullah.ProjectV1.models.Product;
+import com.Jahedullah.ProjectV1.models.ProductVendor;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -14,6 +15,7 @@ public class HibernateUtils {
             Configuration configuration = new Configuration();
             configuration.configure("hibernate.cfg.xml");
             configuration.addAnnotatedClass(Product.class);
+//            configuration.addAnnotatedClass(ProductVendor.class);
 
 
             //create session factory
