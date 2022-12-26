@@ -1,8 +1,11 @@
 package com.Jahedullah.ProjectV1.models;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity
+@Component
 @Table(name = "Product")
 public class Product {
     @Id
@@ -18,6 +21,12 @@ public class Product {
     private long price;
 
     public Product() {
+    }
+
+    public Product(String name, String description, long price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
     }
 
     public Product(int id, String name, String description, long price) {

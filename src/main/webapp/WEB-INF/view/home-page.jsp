@@ -15,6 +15,7 @@
 
                     <table class="table">
                         <thead class="thead-dark">
+
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Product Name</th>
@@ -24,31 +25,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
 
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                        </tr>
+                        <c:forEach items="${products }" var="p">
+                            <tr>
+                                <th scope="row">TECH-PRODUCT-${p.id}</th>
+                                <td>${p.name}</td>
+                                <td>${p.description}</td>
+                                <td class="font-weight-bold">&#2547; ${p.price}</td>
+                                <td>
+                                    <a href="delete/${p.id}"><i class="fa fa-trash text-danger" style="font-size: 20px;" aria-hidden="true"></i></a>
+                                    <a href="update/${p.id}"><i class="fa fa-wrench text-primary" aria-hidden="true" style="font-size: 20px;"></i></a>
+                                </td>
+
+                            </tr>
+                        </c:forEach>
+
                         </tbody>
                     </table>
 

@@ -1,16 +1,12 @@
-package com.Jahedullah.ProjectV1.configuration;
+package com.Jahedullah.ProjectV1.projectConfiguration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import javax.sql.DataSource;
-import javax.xml.crypto.Data;
 
 @EnableWebMvc
 @Configuration
@@ -26,6 +22,13 @@ public class ProjectConfig {
 
         return viewResolver;
     }
+
+//    @Bean
+//    PasswordEncoder getPassWordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
+
+
 
 
 
