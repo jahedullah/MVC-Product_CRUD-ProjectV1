@@ -1,6 +1,6 @@
 package com.Jahedullah.ProjectV1.service;
 
-import com.Jahedullah.ProjectV1.models.User;
+import com.Jahedullah.ProjectV1.entity.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -5,6 +5,13 @@ public class SignUpDTO {
     private String username;
     private String password;
 
+    public SignUpDTO() {
+    }
+
+    public SignUpDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
 
     public int getId() {
         return id;

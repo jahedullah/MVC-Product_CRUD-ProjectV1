@@ -1,25 +1,17 @@
-package com.Jahedullah.ProjectV1.Dao;
+package com.Jahedullah.ProjectV1.dao;
 
-import com.Jahedullah.ProjectV1.models.Product;
-import com.Jahedullah.ProjectV1.utils.HibernateUtils;
+import com.Jahedullah.ProjectV1.entity.*;
+import com.Jahedullah.ProjectV1.utils.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Component;
-import org.w3c.dom.stylesheets.LinkStyle;
-
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class ProductDao {
 
-
-
     //creating Products here
-
     public void createProduct(Product product){
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
@@ -58,7 +50,7 @@ public class ProductDao {
     public Product getProduct(int pid){
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-        Product product = session.get(Product.class,pid);
+        Product product = session.get(Product.class, pid);
         session.getTransaction().commit();
         session.close();
 

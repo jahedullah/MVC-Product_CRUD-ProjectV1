@@ -1,7 +1,6 @@
 package com.Jahedullah.ProjectV1.utils;
 
-import com.Jahedullah.ProjectV1.models.Product;
-import com.Jahedullah.ProjectV1.models.User;
+import com.Jahedullah.ProjectV1.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

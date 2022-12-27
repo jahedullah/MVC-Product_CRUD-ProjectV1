@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.models;
+package com.Jahedullah.ProjectV1.entity;
 
 import org.springframework.stereotype.Component;
 

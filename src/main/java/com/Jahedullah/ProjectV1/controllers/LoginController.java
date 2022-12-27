@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.controllers;
 import com.Jahedullah.ProjectV1.dao.SignUpDao;
 import com.Jahedullah.ProjectV1.dto.SignUpDTO;
+import com.Jahedullah.ProjectV1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,6 @@ public class LoginController {
     public String loginPage() {
 
         return "login";
-
     }
 
     @GetMapping("/signUp")
@@ -44,6 +44,14 @@ public class LoginController {
         System.out.println(signUpDTO);
         signUpDao.saveUser(signUpDTO);
         return "redirect:/myCustomLogin";
+    }
+    @ResponseBody
+    @PostMapping(value = "/restSignUp")
+    public String saveUser(@RequestBody SignUpDTO signUpDTO){
+        String encodedPassword = passwordEncoder.encode(signUpDTO.getPassword());
+        signUpDTO.setPassword(encodedPassword);
+        signUpDao.saveUser(signUpDTO);
+        return "User has been added successfully.";
     }
 
 

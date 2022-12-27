@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.securityConfiguration;
+package com.Jahedullah.ProjectV1.configuration.securityConfiguration;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

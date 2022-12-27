@@ -1,5 +1,4 @@
-package com.Jahedullah.ProjectV1.projectConfiguration;
-
+package com.Jahedullah.ProjectV1.configuration.projectConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

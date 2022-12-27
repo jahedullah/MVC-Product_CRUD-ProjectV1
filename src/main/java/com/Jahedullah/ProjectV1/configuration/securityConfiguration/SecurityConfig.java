@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.securityConfiguration;
+package com.Jahedullah.ProjectV1.configuration.securityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -40,6 +40,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().loginPage("/myCustomLogin")
                 .and()
                 .httpBasic();
+
+        http.csrf().disable();
 
 
     }

@@ -1,7 +1,6 @@
 package com.Jahedullah.ProjectV1.service;
-
-import com.Jahedullah.ProjectV1.dao.UserDao;
-import com.Jahedullah.ProjectV1.models.User;
+import com.Jahedullah.ProjectV1.dao.*;
+import com.Jahedullah.ProjectV1.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
