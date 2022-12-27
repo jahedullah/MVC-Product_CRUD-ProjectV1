@@ -1,7 +1,6 @@
 package com.Jahedullah.ProjectV1.controllers;
 import com.Jahedullah.ProjectV1.dao.SignUpDao;
 import com.Jahedullah.ProjectV1.dto.SignUpDTO;
-import com.Jahedullah.ProjectV1.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

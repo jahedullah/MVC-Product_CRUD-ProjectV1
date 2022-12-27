@@ -1,70 +1,20 @@
 package com.Jahedullah.ProjectV1.dao;
 
-import com.Jahedullah.ProjectV1.entity.*;
-import com.Jahedullah.ProjectV1.utils.*;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
+import com.Jahedullah.ProjectV1.entity.Product;
 import org.springframework.stereotype.Component;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProductDao {
+public interface ProductDao {
 
-    //creating Products here
-    public void createProduct(Product product){
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-        session.close();
-    }
+    public void createProduct(Product product);
 
-    //get all Products
-    public List<Product> getProducts(){
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
+    public List<Product> getProducts();
 
-        Criteria cr = session.createCriteria(Product.class);
-        List<Product> productList = new ArrayList<Product>(cr.list());
+    public void deleteProduct(int pid);
 
-        session.getTransaction().commit();
-        session.close();
+    public Product getProduct(int pid);
 
-        return productList;
-
-
-    }
-    //Deleting the Product
-    public void deleteProduct(int pid){
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        Product product = session.get(Product.class,pid);
-        session.beginTransaction();
-        session.delete(product);
-        session.getTransaction().commit();
-        session.close();
-
-    }
-
-    //get the Single Product
-    public Product getProduct(int pid){
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        Product product = session.get(Product.class, pid);
-        session.getTransaction().commit();
-        session.close();
-
-        return product;
-    }
-
-    //update product
-    public void updateProduct(Product product){
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(product);
-        session.getTransaction().commit();
-        session.close();
-    }
-
+    public void updateProduct(Product product);
 
 }

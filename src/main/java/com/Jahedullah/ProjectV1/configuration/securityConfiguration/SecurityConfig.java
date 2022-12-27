@@ -26,14 +26,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/home").hasAuthority("USER")
-                .antMatchers("/admin").hasAuthority("ADMIN")
+                .antMatchers(
+                        "/admin",
+                        "/ProductsAdd",
+                        "/ProductsUpdate/{courseId}",
+                        "/ProductsDelete/{courseId}").hasAuthority("ADMIN")
                 .antMatchers("/myCustomLogin").permitAll()
                 .anyRequest().authenticated()
                 .and()

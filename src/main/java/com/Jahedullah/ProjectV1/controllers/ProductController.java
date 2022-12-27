@@ -7,14 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.Jahedullah.ProjectV1.entity.*;
 import com.Jahedullah.ProjectV1.dao.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/",method = RequestMethod.GET)
 public class ProductController {
-    @Autowired
-    private Product product;
     @Autowired
     private ProductDao productDao;
 

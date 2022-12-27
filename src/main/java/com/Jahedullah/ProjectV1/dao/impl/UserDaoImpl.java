@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 @Repository
 public class UserDaoImpl implements UserDao {
-
     public User findByUsername(String Username){
 
         Session session = HibernateUtils.getSessionFactory().openSession();

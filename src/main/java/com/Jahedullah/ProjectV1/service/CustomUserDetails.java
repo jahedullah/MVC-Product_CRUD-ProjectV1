@@ -10,9 +10,9 @@ import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
-    public CustomUserDetails(User user){
+    public CustomUserDetails(User user) {
         super();
         this.user = user;
     }
