@@ -1,14 +1,11 @@
 package com.Jahedullah.ProjectV1.controllers;
 
-import com.Jahedullah.ProjectV1.Dao.PostmanProductDao;
-import com.Jahedullah.ProjectV1.Dao.ProductDao;
-import com.Jahedullah.ProjectV1.models.PostmanProduct;
+import com.Jahedullah.ProjectV1.dao.ProductDao;
 import com.Jahedullah.ProjectV1.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,15 +24,6 @@ public class PostManController {
         return "Hey, I am the postman. the new Buddy.";
     }
 
-//    @ResponseBody
-
-//    @GetMapping (value = "/Products")
-//    @ResponseBody
-//    public PostmanProduct getProducts(){
-//        PostmanProduct postmanProduct = new PostmanProduct(103, "s2", "Samsung");
-////        return new ResponseEntity<>(postmanProductDao.getProducts(), HttpStatus.ACCEPTED);
-//        return postmanProduct;
-//    }
     @GetMapping (value = "/productswithid/{courseId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> getProducts(@PathVariable int courseId){
 

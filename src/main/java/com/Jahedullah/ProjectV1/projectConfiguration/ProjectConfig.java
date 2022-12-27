@@ -10,10 +10,9 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = "com.Jahedullah.ProjectV1")
+@ComponentScan(basePackages = "com.Jahedullah")
 public class ProjectConfig {
 
-    //set up View Resolver
     @Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -23,19 +22,9 @@ public class ProjectConfig {
         return viewResolver;
     }
 
-//    @Bean
-//    PasswordEncoder getPassWordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    PasswordEncoder getPassWordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
-
-
-
-
-
-//    @Bean
-//    public DriverManagerDataSource driverManagerDataSource(){
-//
-//        return driverManagerDataSource();
-//    }
 }
