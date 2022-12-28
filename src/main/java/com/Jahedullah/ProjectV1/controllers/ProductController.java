@@ -15,7 +15,6 @@ public class ProductController {
     @Autowired
     private ProductDao productDao;
 
-//    @ResponseBody
     @GetMapping(value = "/hi")
     public String showPostman(){
         return "Hey, I am the postman. the new Buddy.";
@@ -24,7 +23,6 @@ public class ProductController {
     @GetMapping (value = ProductURL.PRODUCT_WITH_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Product> getProducts(@PathVariable int courseId){
 
-//        return new ResponseEntity<>(postmanProductDao.getProducts(), HttpStatus.ACCEPTED);
         Product product = productDao.getProduct(courseId);
         return ResponseEntity.ok(product);
     }
@@ -32,7 +30,6 @@ public class ProductController {
     @GetMapping (value = ProductURL.PRODUCT_LIST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Product>> getProductsList(){
 
-//        return new ResponseEntity<>(postmanProductDao.getProducts(), HttpStatus.ACCEPTED);
         List<Product> productsList = productDao.getProducts();
         return ResponseEntity.ok(productsList);
     }
@@ -61,6 +58,16 @@ public class ProductController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping("/test/user")
+    public String userTest(){
+        return "I am a User";
+    }
+
+    @GetMapping("/test/admin")
+    public String adminTest(){
+        return "I am a Admin";
     }
 }
 
