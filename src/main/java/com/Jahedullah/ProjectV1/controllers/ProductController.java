@@ -10,7 +10,7 @@ import com.Jahedullah.ProjectV1.dao.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/",method = RequestMethod.GET)
+@RequestMapping(value = "/Products",method = RequestMethod.GET)
 public class ProductController {
     @Autowired
     private ProductDao productDao;

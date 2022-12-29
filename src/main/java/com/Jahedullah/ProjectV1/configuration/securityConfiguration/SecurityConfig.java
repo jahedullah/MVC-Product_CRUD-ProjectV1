@@ -2,8 +2,7 @@ package com.Jahedullah.ProjectV1.configuration.securityConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -12,8 +11,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import static com.Jahedullah.ProjectV1.configuration.permissions.AppUserPermission.PRODUCT_WRITE;
 import static com.Jahedullah.ProjectV1.configuration.role.AppUserRole.ADMIN;
 import static com.Jahedullah.ProjectV1.configuration.role.AppUserRole.USER;
+
 
 @EnableWebSecurity(debug = true)
 @ComponentScan(basePackages = "com.Jahedullah")
@@ -42,11 +43,18 @@ public class SecurityConfig{
                 .antMatchers("/home").hasAnyAuthority()
                 .antMatchers("/test/user").hasRole(USER.name())
                 .antMatchers("/test/admin").hasRole(ADMIN.name())
-                .antMatchers(
-                        "/admin",
-                        "/ProductsAdd",
-                        "/ProductsUpdate/{courseId}",
-                        "/ProductsDelete/{courseId}").hasAuthority("ADMIN")
+                //Added this ant matcher for DB Calls. I used CustomUserDetailsService.
+//                .antMatchers(
+//                        "/admin",
+//                        "/ProductsAdd",
+//                        "/ProductsUpdate/{courseId}",
+//                        "/ProductsDelete/{courseId}").hasAuthority("ADMIN")
+
+                .antMatchers(HttpMethod.DELETE,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(HttpMethod.PUT,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(HttpMethod.POST,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(HttpMethod.GET,"/Products/**").hasAnyRole(ADMIN.name(), USER.name())
+
                 .antMatchers("/myCustomLogin").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -65,14 +73,16 @@ public class SecurityConfig{
         UserDetails nayimUser = User.builder()
                 .username("nayim")
                 .password(passwordEncoder.encode("nayim123"))
-                .roles(USER.name())
+//                .roles(USER.name())
+                .authorities(USER.getGrantedAuthorities())
                 .build();
 
         // In memory Admin user
         UserDetails adminUser = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("admin123"))
-                .roles(ADMIN.name()) //ROLE ADMIN
+//                .roles(ADMIN.name()) //ROLE ADMIN
+                .authorities(ADMIN.getGrantedAuthorities())
                 .build();
 
         return new InMemoryUserDetailsManager(
