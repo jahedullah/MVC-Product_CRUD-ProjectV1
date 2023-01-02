@@ -2,13 +2,10 @@ package com.Jahedullah.ProjectV1.utils;
 
 import com.Jahedullah.ProjectV1.entity.*;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-
-import javax.imageio.spi.ServiceRegistry;
 import java.util.Properties;
 
 public class HibernateUtils {

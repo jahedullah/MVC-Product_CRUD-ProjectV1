@@ -1,6 +1,5 @@
 package com.Jahedullah.ProjectV1;
 
-import com.Jahedullah.ProjectV1.configuration.projectConfiguration.ProjectConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
