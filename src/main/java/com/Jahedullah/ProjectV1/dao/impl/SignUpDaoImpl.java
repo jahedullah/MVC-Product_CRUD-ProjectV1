@@ -16,6 +16,7 @@ public class SignUpDaoImpl implements SignUpDao{
                              signUpDTO.getPassword(),
                             true,
                             "USER");
+
         session.beginTransaction();
         session.save(user);
         session.getTransaction().commit();
