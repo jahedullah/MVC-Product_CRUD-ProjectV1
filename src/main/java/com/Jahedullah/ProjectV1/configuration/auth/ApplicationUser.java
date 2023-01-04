@@ -2,9 +2,7 @@ package com.Jahedullah.ProjectV1.configuration.auth;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 public class ApplicationUser implements UserDetails {
