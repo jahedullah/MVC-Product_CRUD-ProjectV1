@@ -40,7 +40,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // token is valid for 30 minutes. It is converted into MiliSeconds.
-                .setExpiration(new Date(System.currentTimeMillis() + 100 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 100 * 60))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

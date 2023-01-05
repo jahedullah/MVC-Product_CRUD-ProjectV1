@@ -39,7 +39,7 @@ public class JwtTokenVerifier  extends OncePerRequestFilter {
             return;
         }
         // Because "Bearer Token " String character counts upto 13. So the real token appears from index 13.
-        jwt = authHeader.substring(13);
+        jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
 
         // if we have the userEmail and the user is not Authenticated Yet.
