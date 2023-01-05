@@ -23,6 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <slf4j.version>1.7.30</slf4j.version>
         <jjwt.version>0.11.5</jjwt.version>
+        <spring.version>2.7.7</spring.version>
     </properties>
 
     <dependencies>
@@ -31,14 +32,14 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.7.5</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.7.5</version>
+            <version>${spring.version}</version>
         </dependency>
 
 
@@ -144,7 +145,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>2.7.5</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -164,6 +165,15 @@
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+
 
 
 

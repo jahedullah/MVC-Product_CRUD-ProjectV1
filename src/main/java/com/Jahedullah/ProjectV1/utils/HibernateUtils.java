@@ -28,6 +28,7 @@ public class HibernateUtils {
             configuration.setProperties(properties);
 
             configuration.addAnnotatedClass(Product.class);
+            configuration.addAnnotatedClass(User.class);
 
 
             //create session factory
