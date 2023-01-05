@@ -1,11 +1,11 @@
-package com.Jahedullah.ProjectV1.configuration.role;
-import com.Jahedullah.ProjectV1.configuration.permissions.AppUserPermission;
+package com.Jahedullah.ProjectV1.entity.role;
+import com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission;
 import com.google.common.collect.Sets;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.Set;
 import java.util.stream.Collectors;
-import static com.Jahedullah.ProjectV1.configuration.permissions.AppUserPermission.PRODUCT_READ;
-import static com.Jahedullah.ProjectV1.configuration.permissions.AppUserPermission.PRODUCT_WRITE;
+import static com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission.PRODUCT_READ;
+import static com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission.PRODUCT_WRITE;
 
 public enum AppUserRole {
     USER(Sets.newHashSet(PRODUCT_READ)), ADMIN(Sets.newHashSet(PRODUCT_READ, PRODUCT_WRITE));

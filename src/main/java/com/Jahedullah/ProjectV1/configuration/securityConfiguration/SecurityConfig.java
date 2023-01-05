@@ -1,11 +1,12 @@
 package com.Jahedullah.ProjectV1.configuration.securityConfiguration;
-import com.Jahedullah.ProjectV1.configuration.auth.ApplicationUserService;
 import com.Jahedullah.ProjectV1.configuration.jwt.JwtTokenVerifier;
-import com.Jahedullah.ProjectV1.configuration.jwt.JwtUsernameAndPasswordAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,59 +15,42 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import static com.Jahedullah.ProjectV1.configuration.permissions.AppUserPermission.PRODUCT_WRITE;
-import static com.Jahedullah.ProjectV1.configuration.role.AppUserRole.ADMIN;
-import static com.Jahedullah.ProjectV1.configuration.role.AppUserRole.USER;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission.PRODUCT_WRITE;
+import static com.Jahedullah.ProjectV1.entity.role.AppUserRole.ADMIN;
+import static com.Jahedullah.ProjectV1.entity.role.AppUserRole.USER;
 
+@Configuration
 @EnableWebSecurity(debug = true)
-@ComponentScan(basePackages = "com.Jahedullah")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@ComponentScan(basePackages = "com.Jahedullah")
+@RequiredArgsConstructor
 public class SecurityConfig{
-    private final PasswordEncoder passwordEncoder;
-    private final ApplicationUserService applicationUserService;
 
-    public SecurityConfig(ApplicationUserService applicationUserService, PasswordEncoder passwordEncoder) {
-        this.applicationUserService = applicationUserService;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final JwtTokenVerifier jwtTokenVerifier;
+    private final AuthenticationProvider authenticationProvider;
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(daoAuthenticationProvider());
-        return authenticationManagerBuilder.build();
-    }
-
-
-
-    // This Bean is Used when you are using CustomUserDetailsService -> which is used to fetch user Id and Pass and other infos from DB.
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(applicationUserService);
-
-        return  provider;
-    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http
-                .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager))
-                // adding a filter after the "JwtUsernameAndPasswordAuthenticationFilter"
-                .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
+//                .addFilterAfter(new JwtTokenVerifier(), JwtUsernameAndPasswordAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                .antMatchers("/auth/**").permitAll()
+
                 .antMatchers(HttpMethod.DELETE,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.PUT,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.POST,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.GET,"/Products/**").hasAnyRole(ADMIN.name(), USER.name())
 
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class);
+
+
 
 
         http.csrf().disable();

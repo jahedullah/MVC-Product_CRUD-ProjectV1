@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.configuration.permissions;
+package com.Jahedullah.ProjectV1.entity.permissions;
 
 public enum AppUserPermission {
     PRODUCT_READ("product:read"),

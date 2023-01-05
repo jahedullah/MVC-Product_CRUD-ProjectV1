@@ -1,75 +1,72 @@
 package com.Jahedullah.ProjectV1.configuration.jwt;
 
-import com.google.common.base.Strings;
-import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
+import com.Jahedullah.ProjectV1.service.JwtService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 
+@Component
+@RequiredArgsConstructor
 public class JwtTokenVerifier  extends OncePerRequestFilter {
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         // Grabbing the Bearer Token that is tagged as "Authorization" in the Header.
-        String authorizationHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
+        // Cutting the "Bearer Token " String out of the token. Basically storing the actual token.
+        final String jwt;
+        // To Extract the user Email from the database.
+        final String userEmail;
 
         // Checking if the authorizationHeader is empty or holding any token that does not starts with Bearer.
-        if(Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             // The Request will be rejected.
-            filterChain.doFilter(request,response);
+            filterChain.doFilter(request, response);
             return;
         }
-        // Cutting the "Bearer Token " String out of the token. Basically storing the actual token.
-        String token = authorizationHeader.replace("Bearer Token ", "");
-        try{
-            // the same key that we made in "JwtUsernameAndPasswordAuthenticationFilter" class.
-            String secretKey = "securesecuresecuresecuresecuresecuresecuresecuresecuresecuresecuresecure";
+        // Because "Bearer Token " String character counts upto 13. So the real token appears from index 13.
+        jwt = authHeader.substring(13);
+        userEmail = jwtService.extractUsername(jwt);
 
-            // JWS is the Signed JWT
-            Jws<Claims> claimsJws = Jwts.parser()
-                    .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
-                    .parseClaimsJws(token);
+        // if we have the userEmail and the user is not Authenticated Yet.
+        if (userEmail != null
+                &&
+                SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            Claims body = claimsJws.getBody();
-            // In the subject field we have the username. After decoding the key.
-            String username = body.getSubject();
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            //Check if the user is Valid or Not.
+            if (jwtService.isTokenValid(jwt, userDetails)) {
+                //if valid then create a token of type "UsernamePasswordAuthenticationToken"
+                UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                userDetails.getAuthorities()
+                        );
+                authenticationToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
 
-            // Grabbing the authorities part and storing it in a map.
-            List<Map<String, String>> authorities = (List<Map<String,String>>)body.get("authorities");
-
-            // storing it in SimpleGrantedAuthorities.
-            Set<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
-                    .map(m -> new SimpleGrantedAuthority(m.get("authority")))
-                    .collect(Collectors.toSet());
-
-            // giving the information to the authenticator.
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    simpleGrantedAuthorities
-            );
-            // the client that has sent the token is now authenticated.
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (JwtException e){
-            throw new IllegalStateException(String.format("Token [ %s ] cannot be trusted", token));
         }
 
         // pass the response to next filter-chain if there is any to make the api being executed and pass the data.
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
 
     }
 }
