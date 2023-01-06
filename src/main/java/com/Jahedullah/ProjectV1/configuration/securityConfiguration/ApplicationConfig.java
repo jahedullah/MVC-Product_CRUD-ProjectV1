@@ -26,7 +26,7 @@ public class ApplicationConfig {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
                 try {
-                    return userDao.findByUsername(username);
+                    return userDao.findByEmail(username);
                 } catch (Exception e){
                     throw new UsernameNotFoundException("Username is not Found.");
                 }

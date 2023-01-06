@@ -3,7 +3,9 @@ import com.Jahedullah.ProjectV1.dao.UserDao;
 import com.Jahedullah.ProjectV1.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+
 @Repository
 public class UserDaoImpl implements UserDao {
     public User findByUsername(String Username){
@@ -32,7 +34,10 @@ public class UserDaoImpl implements UserDao {
     public User findByEmail(String email) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-        User user = session.get(User.class, email);
+        String query = "from User where email = :e";
+        Query q = session.createQuery(query);
+        q.setParameter("e",email);
+        User user = (User) q.uniqueResult();
         session.getTransaction().commit();
         session.close();
 
