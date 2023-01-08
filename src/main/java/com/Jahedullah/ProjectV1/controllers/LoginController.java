@@ -22,37 +22,5 @@ public class LoginController {
     public String loginSuccess(){
         return "process-login";
     }
-//    @ResponseBody
-//    @GetMapping("/error")
-//    public String error(){
-//        return "Something is error here.";
-//    }
-//
-//    @GetMapping("/signUp")
-//    public String signUpPage(@ModelAttribute("signupdto") SignUpDTO signUpDTO){
-//
-//        return "signup";
-//    }
-//
-//    @PostMapping("/process-signup")
-//    public String processLoginPage(SignUpDTO signUpDTO){
-//
-//        System.out.println(signUpDTO);
-//        String encodedPassword = passwordEncoder.encode(signUpDTO.getPassword());
-//        signUpDTO.setPassword(encodedPassword);
-//        System.out.println(signUpDTO);
-//        signUpDao.saveUser(signUpDTO);
-//        return "redirect:/myCustomLogin";
-//    }
-//    @ResponseBody
-//    @PostMapping(value = "/restSignUp")
-//    public String saveUser(@RequestBody SignUpDTO signUpDTO){
-//        String encodedPassword = passwordEncoder.encode(signUpDTO.getPassword());
-//        signUpDTO.setPassword(encodedPassword);
-//        signUpDao.saveUser(signUpDTO);
-//        return "User has been added successfully.";
-//    }
-
-
 
 }

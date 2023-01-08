@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Set;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
 
 @Data
 @Builder
@@ -28,8 +31,11 @@ public class User implements UserDetails {
     private  String email;
     private  String password;
     private  Integer mobilenumber;
+
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
+
+
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.
@@ -38,9 +44,10 @@ public class User implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+            return appUserRole.getGrantedAuthorities();
+        }
 
-        return Collections.singleton(new SimpleGrantedAuthority(appUserRole.name()));
-    }
+
 
     @Override
     public String getPassword() {

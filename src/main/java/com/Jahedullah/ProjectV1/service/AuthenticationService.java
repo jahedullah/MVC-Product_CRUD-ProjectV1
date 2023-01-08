@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .mobilenumber(request.getMobilenumber())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .appUserRole(AppUserRole.USER)
+                .appUserRole(AppUserRole.ADMIN)
                 .build();
 
         userDao.save(user);
@@ -41,13 +43,13 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        var user = userDao.findByEmail(request.getEmail());
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
                         request.getPassword()
                 )
         );
-        var user = userDao.findByEmail(request.getEmail());
         var jwtToken = jwtService.generateToken(user);
         return  AuthenticationResponse.builder()
                 .token(jwtToken)
