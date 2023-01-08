@@ -31,6 +31,7 @@ public class User implements UserDetails {
     private  String email;
     private  String password;
     private  Integer mobilenumber;
+    private String usertype;
 
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;

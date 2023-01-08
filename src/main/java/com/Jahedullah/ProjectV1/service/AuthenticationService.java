@@ -25,17 +25,33 @@ public class AuthenticationService {
     private final AuthenticationManager authManager;
 
     public AuthenticationResponse register(RegisterRequest request){
-        var user = User.builder()
-                .firstname(request.getFirstname())
-                .lastname(request.getLastname())
-                .email(request.getEmail())
-                .mobilenumber(request.getMobilenumber())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .appUserRole(AppUserRole.ADMIN)
-                .build();
+        User user = null;
+        if(request.getUsertype().equals("user")) {
+            user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .mobilenumber(request.getMobilenumber())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .usertype(request.getUsertype())
+                    .appUserRole(AppUserRole.USER)
+                    .build();
+        } else if (request.getUsertype().equals("admin")) {
+            user = User.builder()
+                    .firstname(request.getFirstname())
+                    .lastname(request.getLastname())
+                    .email(request.getEmail())
+                    .mobilenumber(request.getMobilenumber())
+                    .password(passwordEncoder.encode(request.getPassword()))
+                    .usertype(request.getUsertype())
+                    .appUserRole(AppUserRole.ADMIN)
+                    .build();
+
+        }
 
         userDao.save(user);
         var jwtToken = jwtService.generateToken(user);
+
         return  AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
