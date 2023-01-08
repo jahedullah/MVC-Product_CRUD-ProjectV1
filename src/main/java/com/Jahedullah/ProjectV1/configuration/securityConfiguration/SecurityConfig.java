@@ -40,7 +40,7 @@ public class SecurityConfig{
                 .antMatchers(HttpMethod.DELETE,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.PUT,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(HttpMethod.POST,"/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
-                .antMatchers(HttpMethod.GET,"/Products/**").hasAnyRole(ADMIN.name(), USER.name())
+//                .antMatchers(HttpMethod.GET,"/Products/**").hasAnyRole(ADMIN.name(), USER.name())
 
                 .anyRequest().authenticated()
                 .and()
