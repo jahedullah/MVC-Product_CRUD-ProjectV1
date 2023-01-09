@@ -1,19 +1,28 @@
-package com.Jahedullah.ProjectV1.service;
+package com.Jahedullah.ProjectV1.model.service;
 
 import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationRequest;
 import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationResponse;
 import com.Jahedullah.ProjectV1.configuration.auth.RegisterRequest;
-import com.Jahedullah.ProjectV1.dao.UserDao;
-import com.Jahedullah.ProjectV1.entity.User;
-import com.Jahedullah.ProjectV1.entity.role.AppUserRole;
+import com.Jahedullah.ProjectV1.model.dao.UserDao;
+import com.Jahedullah.ProjectV1.model.entity.User;
+import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.var;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -24,29 +33,39 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
+    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) throws IOException {
         User user = null;
-        if (request.getUsertype().equals("user")) {
-            user = User.builder()
-                    .firstname(request.getFirstname())
-                    .lastname(request.getLastname())
-                    .email(request.getEmail())
-                    .mobilenumber(request.getMobilenumber())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .usertype(request.getUsertype())
-                    .appUserRole(AppUserRole.USER)
-                    .build();
-        } else if (request.getUsertype().equals("admin")) {
-            user = User.builder()
-                    .firstname(request.getFirstname())
-                    .lastname(request.getLastname())
-                    .email(request.getEmail())
-                    .mobilenumber(request.getMobilenumber())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .usertype(request.getUsertype())
-                    .appUserRole(AppUserRole.ADMIN)
-                    .build();
+        List emailList = userDao.findAllEmail();
+        if(!emailList.contains(request.getEmail())) {
 
+            if (request.getUsertype().equals("user")) {
+                user = User.builder()
+                        .firstname(request.getFirstname())
+                        .lastname(request.getLastname())
+                        .email(request.getEmail())
+                        .mobilenumber(request.getMobilenumber())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .usertype(request.getUsertype())
+                        .appUserRole(AppUserRole.USER)
+                        .build();
+            } else if (request.getUsertype().equals("admin")) {
+                user = User.builder()
+                        .firstname(request.getFirstname())
+                        .lastname(request.getLastname())
+                        .email(request.getEmail())
+                        .mobilenumber(request.getMobilenumber())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .usertype(request.getUsertype())
+                        .appUserRole(AppUserRole.ADMIN)
+                        .build();
+
+            }
+        }else {
+            response.setStatus(BAD_REQUEST.value());
+            Map<String, String> error = new HashMap<>();
+            error.put("Oops! Email has already been taken", "Use different email.");
+            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+            new ObjectMapper().writeValue(response.getOutputStream(), error);
         }
 
         userDao.save(user);

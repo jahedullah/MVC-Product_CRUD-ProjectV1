@@ -1,6 +1,6 @@
 package com.Jahedullah.ProjectV1.utils;
 
-import com.Jahedullah.ProjectV1.entity.*;
+import com.Jahedullah.ProjectV1.model.entity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

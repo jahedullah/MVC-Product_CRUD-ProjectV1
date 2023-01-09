@@ -1,6 +1,6 @@
 package com.Jahedullah.ProjectV1.configuration.filter;
 
-import com.Jahedullah.ProjectV1.service.JwtService;
+import com.Jahedullah.ProjectV1.model.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;

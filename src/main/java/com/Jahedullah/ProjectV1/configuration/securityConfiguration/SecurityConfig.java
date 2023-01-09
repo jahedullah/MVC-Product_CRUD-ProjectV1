@@ -4,7 +4,6 @@ import com.Jahedullah.ProjectV1.configuration.filter.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,14 +11,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import static com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission.PRODUCT_WRITE;
-import static com.Jahedullah.ProjectV1.entity.role.AppUserRole.ADMIN;
-import static com.Jahedullah.ProjectV1.entity.role.AppUserRole.USER;
+import static com.Jahedullah.ProjectV1.model.entity.permissions.AppUserPermission.PRODUCT_WRITE;
+import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.ADMIN;
+import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.USER;
+import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.DELETE;
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.PUT;
 
 @Configuration
 @EnableWebSecurity(debug = true)
-//@ComponentScan(basePackages = "com.Jahedullah")
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -27,16 +28,18 @@ public class SecurityConfig {
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
 //                .addFilterAfter(new JwtTokenFilter(), JwtUsernameAndPasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/Auth/**").permitAll()
 
-                .antMatchers(HttpMethod.DELETE, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
-                .antMatchers(HttpMethod.PUT, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
-                .antMatchers(HttpMethod.POST, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/Products/**").hasAnyRole(ADMIN.name(), USER.name())
+                .antMatchers(POST, "/Auth/Register/Admin").hasRole(ADMIN.name())
+                .antMatchers(DELETE, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(PUT, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(POST, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
+                .antMatchers(GET, "/Products/**").hasAnyRole(ADMIN.name(), USER.name())
+
 
                 .anyRequest().authenticated()
                 .and()

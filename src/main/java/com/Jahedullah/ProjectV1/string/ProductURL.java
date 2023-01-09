@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.URL;
+package com.Jahedullah.ProjectV1.string;
 
 public class ProductURL {
 

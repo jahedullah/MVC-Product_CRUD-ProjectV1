@@ -1,6 +1,6 @@
-package com.Jahedullah.ProjectV1.entity;
+package com.Jahedullah.ProjectV1.model.entity;
 
-import com.Jahedullah.ProjectV1.entity.role.AppUserRole;
+import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

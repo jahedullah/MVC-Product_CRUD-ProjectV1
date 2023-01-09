@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.service;
+package com.Jahedullah.ProjectV1.model.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -7,7 +7,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -43,7 +42,7 @@ public class JwtService {
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // token is valid for 10 minutes. It is converted into MiliSeconds.
-                .setExpiration(new Date(System.currentTimeMillis() + 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

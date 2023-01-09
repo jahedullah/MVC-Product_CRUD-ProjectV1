@@ -1,11 +1,14 @@
-package com.Jahedullah.ProjectV1.dao.impl;
+package com.Jahedullah.ProjectV1.model.dao.impl;
 
-import com.Jahedullah.ProjectV1.dao.UserDao;
-import com.Jahedullah.ProjectV1.entity.User;
+import com.Jahedullah.ProjectV1.model.dao.UserDao;
+import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -44,6 +47,19 @@ public class UserDaoImpl implements UserDao {
 
         return user;
 
+    }
+
+    @Override
+    public List findAllEmail() {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        String query = "select email from User";
+        Query q = session.createQuery(query);
+        ArrayList<String> emailList = (ArrayList<String>) q.list();
+        session.getTransaction().commit();
+        session.close();
+
+        return emailList;
     }
 
 

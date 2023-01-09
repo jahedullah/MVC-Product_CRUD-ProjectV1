@@ -1,7 +1,7 @@
-package com.Jahedullah.ProjectV1.dao.impl;
+package com.Jahedullah.ProjectV1.model.dao.impl;
 
-import com.Jahedullah.ProjectV1.dao.ProductDao;
-import com.Jahedullah.ProjectV1.entity.Product;
+import com.Jahedullah.ProjectV1.model.dao.ProductDao;
+import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;

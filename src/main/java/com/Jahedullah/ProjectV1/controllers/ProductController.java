@@ -1,12 +1,12 @@
 package com.Jahedullah.ProjectV1.controllers;
 
-import com.Jahedullah.ProjectV1.URL.ProductURL;
+import com.Jahedullah.ProjectV1.string.ProductURL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.Jahedullah.ProjectV1.entity.*;
-import com.Jahedullah.ProjectV1.dao.*;
+import com.Jahedullah.ProjectV1.model.entity.*;
+import com.Jahedullah.ProjectV1.model.dao.*;
 
 import java.util.List;
 
