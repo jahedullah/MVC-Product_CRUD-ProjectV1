@@ -10,10 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.var;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponse register(RegisterRequest request){
+    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response){
         User user = null;
         if(request.getUsertype().equals("user")) {
             user = User.builder()
@@ -50,10 +51,14 @@ public class AuthenticationService {
         }
 
         userDao.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtAccessToken = jwtService.generateAccessToken(user);
+        var jwtRefreshToken = jwtService.generateRefreshToken(user);
 
+        response.setHeader("AccessToken", jwtAccessToken);
+        response.setHeader("RefreshToken", jwtRefreshToken);
         return  AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtAccessToken)
+                .refreshToken(jwtRefreshToken)
                 .build();
 
     }
@@ -66,11 +71,12 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var jwtToken = jwtService.generateToken(user);
+        var jwtAccessToken  = jwtService.generateAccessToken(user);
+        var jwtRefreshToken = jwtService.generateRefreshToken(user);
         return  AuthenticationResponse.builder()
-                .token(jwtToken)
+                .accessToken(jwtAccessToken)
+                .refreshToken(jwtRefreshToken)
                 .build();
-
 
     }
 }

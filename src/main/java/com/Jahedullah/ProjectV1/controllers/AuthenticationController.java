@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -22,10 +24,11 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    )
+            @RequestBody RegisterRequest request,
+            HttpServletResponse response
+            )
     {
-        return ResponseEntity.ok(authService.register(request));
+        return ResponseEntity.ok(authService.register(request,response));
     }
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(

@@ -1,5 +1,6 @@
 package com.Jahedullah.ProjectV1.service;
 
+import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -8,6 +9,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,10 +29,10 @@ public class JwtService {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateAccessToken(UserDetails userDetails){
+        return generateAccessToken(new HashMap<>(), userDetails);
     }
-    public String generateToken(
+    public String generateAccessToken(
             Map<String, Object> extractClaims,
             UserDetails userDetails
     ){
@@ -39,8 +41,25 @@ public class JwtService {
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                // token is valid for 30 minutes. It is converted into MiliSeconds.
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                // token is valid for 10 minutes. It is converted into MiliSeconds.
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 10))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+    public String generateRefreshToken(UserDetails userDetails){
+        return generateRefreshToken(new HashMap<>(), userDetails);
+    }
+    public String generateRefreshToken(
+            Map<String, Object> extractClaims,
+            UserDetails userDetails
+    ){
+        return  Jwts
+                .builder()
+                .setClaims(extractClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                // token is valid for 1 day. It is converted into MiliSeconds.
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
