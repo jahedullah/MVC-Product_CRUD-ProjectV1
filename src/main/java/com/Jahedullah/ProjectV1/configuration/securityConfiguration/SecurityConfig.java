@@ -11,8 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import static com.Jahedullah.ProjectV1.model.entity.permissions.AppUserPermission.PRODUCT_WRITE;
-import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.ADMIN;
-import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.USER;
+import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.*;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;
@@ -33,7 +32,7 @@ public class SecurityConfig {
                 .antMatchers("/Auth/Register/User").permitAll()
                 .antMatchers("/Auth/Authenticate").permitAll()
 
-                .antMatchers(POST, "/Auth/Register/Admin").hasRole(ADMIN.name())
+                .antMatchers(POST, "/Auth/Register/Admin").hasRole(SUPER_ADMIN.name())
                 .antMatchers(DELETE, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(PUT, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(POST, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())

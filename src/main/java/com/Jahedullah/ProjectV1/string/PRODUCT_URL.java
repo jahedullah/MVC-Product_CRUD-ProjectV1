@@ -1,6 +1,6 @@
 package com.Jahedullah.ProjectV1.string;
 
-public class ProductURL {
+public class PRODUCT_URL {
 
     public static final String PRODUCT_WITH_ID = "/WithId/{courseId}";
     public static final String PRODUCT_LIST = "/List";

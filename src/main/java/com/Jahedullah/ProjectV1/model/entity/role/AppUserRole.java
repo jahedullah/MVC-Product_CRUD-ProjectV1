@@ -9,7 +9,10 @@ import static com.Jahedullah.ProjectV1.model.entity.permissions.AppUserPermissio
 import static com.Jahedullah.ProjectV1.model.entity.permissions.AppUserPermission.PRODUCT_WRITE;
 
 public enum AppUserRole {
-    USER(Sets.newHashSet(PRODUCT_READ)), ADMIN(Sets.newHashSet(PRODUCT_READ, PRODUCT_WRITE));
+    USER(Sets.newHashSet(PRODUCT_READ)),
+    ADMIN(Sets.newHashSet(PRODUCT_READ, PRODUCT_WRITE)),
+    SUPER_ADMIN(Sets.newHashSet(PRODUCT_READ, PRODUCT_WRITE));
+
 
     private final Set<AppUserPermission> permissions;
 

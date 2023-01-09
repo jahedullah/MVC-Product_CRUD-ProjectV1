@@ -36,7 +36,7 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) throws IOException {
         User user = null;
         List emailList = userDao.findAllEmail();
-        if(!emailList.contains(request.getEmail())) {
+        if (!emailList.contains(request.getEmail())) {
 
             if (request.getUsertype().equals("user")) {
                 user = User.builder()
@@ -59,8 +59,19 @@ public class AuthenticationService {
                         .appUserRole(AppUserRole.ADMIN)
                         .build();
 
+            } else if (request.getUsertype().equals("superadmin")) {
+                user = User.builder()
+                        .firstname(request.getFirstname())
+                        .lastname(request.getLastname())
+                        .email(request.getEmail())
+                        .mobilenumber(request.getMobilenumber())
+                        .password(passwordEncoder.encode(request.getPassword()))
+                        .usertype(request.getUsertype())
+                        .appUserRole(AppUserRole.SUPER_ADMIN)
+                        .build();
+
             }
-        }else {
+        } else {
             response.setStatus(BAD_REQUEST.value());
             Map<String, String> error = new HashMap<>();
             error.put("Oops! Email has already been taken", "Use different email.");
