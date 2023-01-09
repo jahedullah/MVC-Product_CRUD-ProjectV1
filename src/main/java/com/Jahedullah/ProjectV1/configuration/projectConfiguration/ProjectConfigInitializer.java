@@ -1,4 +1,5 @@
 package com.Jahedullah.ProjectV1.configuration.projectConfiguration;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ProjectConfigInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

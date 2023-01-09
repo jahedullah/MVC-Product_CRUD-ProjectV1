@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.model.dao.impl;
 
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
+import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Session;
@@ -60,6 +61,18 @@ public class UserDaoImpl implements UserDao {
         session.close();
 
         return emailList;
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        User user = findByEmail(email);
+        int userId = user.getId();
+        User userToDelete = session.get(User.class, userId);
+        session.beginTransaction();
+        session.delete(userToDelete);
+        session.getTransaction().commit();
+        session.close();
     }
 
 

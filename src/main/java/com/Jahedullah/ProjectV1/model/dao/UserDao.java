@@ -13,4 +13,6 @@ public interface UserDao {
     User findByEmail(String email);
 
     List findAllEmail();
+
+    void deleteByEmail(String email);
 }

@@ -6,7 +6,6 @@ import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +23,10 @@ public class ProductDaoImpl implements ProductDao {
 
     //get all Products
     public List<Product> getProducts() {
-
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-
         Criteria cr = session.createCriteria(Product.class);
         List<Product> productList = new ArrayList<Product>(cr.list());
-
         session.getTransaction().commit();
         session.close();
 
@@ -41,7 +37,6 @@ public class ProductDaoImpl implements ProductDao {
 
     //Deleting the Product
     public void deleteProduct(int pid) {
-
         Session session = HibernateUtils.getSessionFactory().openSession();
         Product product = session.get(Product.class, pid);
         session.beginTransaction();
