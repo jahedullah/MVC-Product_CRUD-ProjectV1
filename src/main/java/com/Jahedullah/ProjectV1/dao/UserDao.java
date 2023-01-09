@@ -1,10 +1,11 @@
 package com.Jahedullah.ProjectV1.dao;
+
 import com.Jahedullah.ProjectV1.entity.*;
 
 public interface UserDao {
-        User findByUsername(String username);
+    User findByUsername(String username);
 
-        void save(User user);
+    void save(User user);
 
-        User findByEmail(String email);
+    User findByEmail(String email);
 }

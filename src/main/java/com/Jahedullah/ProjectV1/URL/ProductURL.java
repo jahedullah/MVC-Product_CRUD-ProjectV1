@@ -1,4 +1,5 @@
 package com.Jahedullah.ProjectV1.URL;
+
 public class ProductURL {
 
     public static final String PRODUCT_WITH_ID = "/WithId/{courseId}";

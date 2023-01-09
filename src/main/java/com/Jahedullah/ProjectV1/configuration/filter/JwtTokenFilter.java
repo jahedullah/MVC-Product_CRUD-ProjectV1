@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.configuration.jwt;
+package com.Jahedullah.ProjectV1.configuration.filter;
 
 import com.Jahedullah.ProjectV1.service.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,13 +11,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.filter.OncePerRequestFilter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +25,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Component
 @RequiredArgsConstructor
-public class JwtTokenVerifier  extends OncePerRequestFilter {
+public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     @Override

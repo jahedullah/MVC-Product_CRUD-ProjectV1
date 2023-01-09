@@ -9,11 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class ProductDaoImpl implements ProductDao {
 
     //creating Products here
-    public void createProduct(Product product){
+    public void createProduct(Product product) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(product);
@@ -22,7 +23,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //get all Products
-    public List<Product> getProducts(){
+    public List<Product> getProducts() {
 
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
@@ -37,11 +38,12 @@ public class ProductDaoImpl implements ProductDao {
 
 
     }
+
     //Deleting the Product
-    public void deleteProduct(int pid){
+    public void deleteProduct(int pid) {
 
         Session session = HibernateUtils.getSessionFactory().openSession();
-        Product product = session.get(Product.class,pid);
+        Product product = session.get(Product.class, pid);
         session.beginTransaction();
         session.delete(product);
         session.getTransaction().commit();
@@ -50,7 +52,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //get the Single Product
-    public Product getProduct(int pid){
+    public Product getProduct(int pid) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         Product product = session.get(Product.class, pid);
@@ -61,7 +63,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //update product
-    public void updateProduct(Product product){
+    public void updateProduct(Product product) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(product);

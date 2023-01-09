@@ -1,4 +1,5 @@
 package com.Jahedullah.ProjectV1.dao.impl;
+
 import com.Jahedullah.ProjectV1.dao.UserDao;
 import com.Jahedullah.ProjectV1.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    public User findByUsername(String Username){
+    public User findByUsername(String Username) {
 
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
@@ -36,7 +37,7 @@ public class UserDaoImpl implements UserDao {
         session.beginTransaction();
         String query = "from User where email = :e";
         Query q = session.createQuery(query);
-        q.setParameter("e",email);
+        q.setParameter("e", email);
         User user = (User) q.uniqueResult();
         session.getTransaction().commit();
         session.close();

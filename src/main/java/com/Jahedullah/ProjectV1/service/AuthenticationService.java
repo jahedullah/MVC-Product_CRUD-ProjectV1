@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
@@ -25,9 +24,9 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response){
+    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) {
         User user = null;
-        if(request.getUsertype().equals("user")) {
+        if (request.getUsertype().equals("user")) {
             user = User.builder()
                     .firstname(request.getFirstname())
                     .lastname(request.getLastname())
@@ -53,11 +52,11 @@ public class AuthenticationService {
         userDao.save(user);
         var jwtAccessToken = jwtService.generateAccessToken(user);
         var jwtRefreshToken = jwtService.generateRefreshToken(user);
-         // Adding these two token into response header.
+        // Adding these two token into response header.
         response.setHeader("AccessToken", jwtAccessToken);
         response.setHeader("RefreshToken", jwtRefreshToken);
 
-        return  AuthenticationResponse.builder()
+        return AuthenticationResponse.builder()
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
                 .build();
@@ -72,13 +71,13 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var jwtAccessToken  = jwtService.generateAccessToken(user);
+        var jwtAccessToken = jwtService.generateAccessToken(user);
         var jwtRefreshToken = jwtService.generateRefreshToken(user);
 
         // Adding these two token into response header.
         response.setHeader("AccessToken", jwtAccessToken);
         response.setHeader("RefreshToken", jwtRefreshToken);
-        return  AuthenticationResponse.builder()
+        return AuthenticationResponse.builder()
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
                 .build();

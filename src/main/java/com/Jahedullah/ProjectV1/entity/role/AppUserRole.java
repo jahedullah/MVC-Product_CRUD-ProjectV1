@@ -1,4 +1,5 @@
 package com.Jahedullah.ProjectV1.entity.role;
+
 import com.Jahedullah.ProjectV1.entity.permissions.AppUserPermission;
 import com.google.common.collect.Sets;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

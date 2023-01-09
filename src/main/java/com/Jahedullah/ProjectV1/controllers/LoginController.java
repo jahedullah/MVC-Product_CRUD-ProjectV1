@@ -1,4 +1,5 @@
 package com.Jahedullah.ProjectV1.controllers;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,7 +10,7 @@ public class LoginController {
 
     @ResponseBody
     @GetMapping
-    public String homepage(){
+    public String homepage() {
         return "Welcome to ProjectV1 Home";
     }
 
@@ -18,8 +19,9 @@ public class LoginController {
 
         return "login";
     }
+
     @GetMapping("process-login")
-    public String loginSuccess(){
+    public String loginSuccess() {
         return "process-login";
     }
 
