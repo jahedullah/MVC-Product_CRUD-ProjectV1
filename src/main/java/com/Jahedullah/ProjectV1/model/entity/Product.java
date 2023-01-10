@@ -34,22 +34,4 @@ public class Product {
     @JsonBackReference
     private List<User> userList;
 
-//    @Override
-//    public String toString() {
-//        return "Product{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", description='" + description + '\'' +
-//                ", price=" + price +
-//                ", productCount=" + productCount +
-//                ", userList=" + getUserEmailList(userList) +
-//                '}';
-//    }
-//    private String getUserEmailList(Collection<User> userList){
-//        String userEmailList = "";
-//        for(User user : userList){
-//            userEmailList += user.getEmail() + " ";
-//        }
-//        return userEmailList;
-//    }
 }
