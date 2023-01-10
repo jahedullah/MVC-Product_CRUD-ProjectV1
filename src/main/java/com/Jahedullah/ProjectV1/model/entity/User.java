@@ -1,7 +1,9 @@
 package com.Jahedullah.ProjectV1.model.entity;
 
 import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +17,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "user")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,7 +36,7 @@ public class User implements UserDetails {
     private String usertype;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_prod_join", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
-    @JsonManagedReference
+
     private List<Product> productList;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;

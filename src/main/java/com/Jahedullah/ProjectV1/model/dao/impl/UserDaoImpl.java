@@ -132,7 +132,7 @@ public class UserDaoImpl implements UserDao {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         List<Product> productList = new ArrayList<>(user.getProductList());
-        session.getTransaction().commit();
+
         session.close();
 
         return productList;

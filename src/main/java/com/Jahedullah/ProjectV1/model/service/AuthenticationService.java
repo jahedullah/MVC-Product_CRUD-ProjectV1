@@ -1,8 +1,8 @@
 package com.Jahedullah.ProjectV1.model.service;
 
-import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationRequest;
-import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationResponse;
-import com.Jahedullah.ProjectV1.configuration.auth.RegisterRequest;
+import com.Jahedullah.ProjectV1.model.authDto.AuthenticationRequest;
+import com.Jahedullah.ProjectV1.model.authDto.AuthenticationResponse;
+import com.Jahedullah.ProjectV1.model.authDto.RegisterRequest;
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

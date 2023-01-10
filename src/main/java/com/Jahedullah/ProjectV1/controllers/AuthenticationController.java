@@ -1,8 +1,8 @@
 package com.Jahedullah.ProjectV1.controllers;
 
-import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationRequest;
-import com.Jahedullah.ProjectV1.configuration.auth.AuthenticationResponse;
-import com.Jahedullah.ProjectV1.configuration.auth.RegisterRequest;
+import com.Jahedullah.ProjectV1.model.authDto.AuthenticationRequest;
+import com.Jahedullah.ProjectV1.model.authDto.AuthenticationResponse;
+import com.Jahedullah.ProjectV1.model.authDto.RegisterRequest;
 import com.Jahedullah.ProjectV1.model.service.AuthenticationService;
 import com.Jahedullah.ProjectV1.string.AUTH_URL;
 import lombok.RequiredArgsConstructor;

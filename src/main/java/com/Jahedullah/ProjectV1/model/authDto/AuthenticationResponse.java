@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.configuration.auth;
+package com.Jahedullah.ProjectV1.model.authDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -17,22 +17,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
 
     private int id;
-    @Column(name = "name")
+
     private String name;
-    @Column(name = "description")
+
     private String description;
 
     private long price;
     private int productCount;
     @ManyToMany(mappedBy = "productList",fetch = FetchType.EAGER)
-    @JsonBackReference
+
     private List<User> userList;
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

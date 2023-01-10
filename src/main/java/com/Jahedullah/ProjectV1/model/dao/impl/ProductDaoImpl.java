@@ -7,6 +7,7 @@ import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import lombok.Getter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +28,12 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> getProducts() {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-        Criteria cr = session.createCriteria(Product.class);
-        List<Product> productList = new ArrayList<Product>(cr.list());
-        session.getTransaction().commit();
+        String query = "select id, name, price, productCount from Product";
+        Query q = session.createQuery(query);
+        ArrayList<Product> productList = (ArrayList<Product>) q.list();
         session.close();
 
         return productList;
-
 
     }
 
