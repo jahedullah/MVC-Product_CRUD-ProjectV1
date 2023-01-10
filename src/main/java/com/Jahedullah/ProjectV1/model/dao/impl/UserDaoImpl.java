@@ -6,6 +6,7 @@ import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;

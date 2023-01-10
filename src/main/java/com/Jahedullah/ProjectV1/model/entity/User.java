@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -27,7 +29,8 @@ public class User implements UserDetails {
     private String password;
     private Integer mobilenumber;
     private String usertype;
-
+    @ManyToMany
+    private Collection<Product> productList;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
