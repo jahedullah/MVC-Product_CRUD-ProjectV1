@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -27,7 +28,7 @@ public class Product {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "price")
+
     private long price;
     private int productCount;
     @ManyToMany(mappedBy = "productList",fetch = FetchType.EAGER)

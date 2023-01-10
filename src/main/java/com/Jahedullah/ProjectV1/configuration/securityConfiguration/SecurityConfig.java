@@ -29,11 +29,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests()
-                .antMatchers("/Auth/Register/User").permitAll()
-                .antMatchers("/Auth/Authenticate").permitAll()
+                .antMatchers("/Users/User").permitAll()
+                .antMatchers("/Users").permitAll()
 
                 .antMatchers(DELETE, "/User/Delete").hasAnyRole(ADMIN.name(), SUPER_ADMIN.name())
-                .antMatchers(POST, "/Auth/Register/Admin").hasRole(SUPER_ADMIN.name())
+                .antMatchers(POST, "/Users/Admin").hasRole(SUPER_ADMIN.name())
                 .antMatchers(DELETE, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(PUT, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(POST, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())

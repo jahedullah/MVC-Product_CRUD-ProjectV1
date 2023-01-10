@@ -12,17 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/Auth")
+@RequestMapping("/Users")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService authService;
 
-    @ResponseBody
-    @PostMapping("/")
-    public String auth() {
-        return "Hello from Authentication endpoint. :)";
-    }
 
     @PostMapping(AUTH_URL.USER_REGISTRATION)
     public ResponseEntity<AuthenticationResponse> registerUser(
