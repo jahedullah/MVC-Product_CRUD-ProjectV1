@@ -41,7 +41,7 @@ public class ProductController {
 //    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
     public String addProduct(@RequestBody Product product) {
         productDao.createProduct(product);
-        return "Course has been added successfully.";
+        return "Product has been added successfully.";
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
@@ -52,7 +52,7 @@ public class ProductController {
         productCatch.setDescription(productToUpdate.getDescription());
         productCatch.setPrice(productToUpdate.getPrice());
         productDao.updateProduct(productCatch);
-        return "Course has been updated successfully";
+        return "Product has been updated successfully";
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)

@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,11 +31,23 @@ public class User implements UserDetails {
     private String password;
     private Integer mobilenumber;
     private String usertype;
-    @ManyToMany
-    private Collection<Product> productList;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_prod_join", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> productList;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", mobilenumber=" + mobilenumber +
+                ", appUserRole=" + appUserRole +
+                '}';
+    }
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.

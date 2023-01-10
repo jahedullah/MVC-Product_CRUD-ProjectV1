@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.model.dao;
 
 import com.Jahedullah.ProjectV1.model.entity.Product;
+import com.Jahedullah.ProjectV1.model.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -8,14 +9,16 @@ import java.util.List;
 @Component
 public interface ProductDao {
 
-    public void createProduct(Product product);
+    void createProduct(Product product);
 
-    public List<Product> getProducts();
+    List<Product> getProducts();
 
-    public void deleteProduct(int pid);
+    void deleteProduct(int pid);
 
-    public Product getProduct(int pid);
+    Product getProduct(int pid);
 
-    public void updateProduct(Product product);
+    void updateProduct(Product product);
+    void updateProductCount(Product product);
+    void updateProductUserList(Product product, User user);
 
 }

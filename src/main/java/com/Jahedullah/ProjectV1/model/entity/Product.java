@@ -7,14 +7,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+
 import java.util.Collection;
+import java.util.List;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Component
 @Table(name = "Product")
 public class Product {
     @Id
@@ -29,9 +29,25 @@ public class Product {
     @Column(name = "price")
     private long price;
     private int productCount;
-    @ManyToMany(mappedBy = "productList")
-    private Collection<User> userList;
+    @ManyToMany(mappedBy = "productList",fetch = FetchType.EAGER)
+    private List<User> userList;
 
-
-
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", description='" + description + '\'' +
+//                ", price=" + price +
+//                ", productCount=" + productCount +
+//                ", userList=" + getUserEmailList(userList) +
+//                '}';
+//    }
+//    private String getUserEmailList(Collection<User> userList){
+//        String userEmailList = "";
+//        for(User user : userList){
+//            userEmailList += user.getEmail() + " ";
+//        }
+//        return userEmailList;
+//    }
 }

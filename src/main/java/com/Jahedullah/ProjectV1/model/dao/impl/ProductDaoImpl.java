@@ -2,7 +2,9 @@ package com.Jahedullah.ProjectV1.model.dao.impl;
 
 import com.Jahedullah.ProjectV1.model.dao.ProductDao;
 import com.Jahedullah.ProjectV1.model.entity.Product;
+import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
+import lombok.Getter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -61,6 +63,24 @@ public class ProductDaoImpl implements ProductDao {
     public void updateProduct(Product product) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
+        session.update(product);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void updateProductCount(Product product) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        product.setProductCount(product.getProductCount() - 1);
+        session.update(product);
+        session.getTransaction().commit();
+        session.close();
+    }
+    @Override
+    public void updateProductUserList(Product product, User user){
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        product.getUserList().add(user);
         session.update(product);
         session.getTransaction().commit();
         session.close();

@@ -1,19 +1,29 @@
 package com.Jahedullah.ProjectV1.model.dao.impl;
 
+import com.Jahedullah.ProjectV1.model.dao.ProductDao;
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.model.entity.User;
+import com.Jahedullah.ProjectV1.model.service.JwtService;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
 @Repository
 public class UserDaoImpl implements UserDao {
+    @Autowired
+    private ProductDao productDao;
+    @Autowired
+    private JwtService jwtService;
     public User findByUsername(String Username) {
 
         Session session = HibernateUtils.getSessionFactory().openSession();
@@ -74,6 +84,39 @@ public class UserDaoImpl implements UserDao {
         session.delete(userToDelete);
         session.getTransaction().commit();
         session.close();
+    }
+    @Override
+    public void updateUserProductList(User user, Product product){
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        user.getProductList().add(product);
+        session.update(user);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Override
+    public String buyProductByID(int id, HttpServletRequest request) {
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        Product product = productDao.getProduct(id);
+        String accessToken = request.getHeader("Authorization");
+        if(accessToken != null){
+            String jwt = accessToken.substring(7);
+            String userEmail = jwtService.extractUsername(jwt);
+            session.beginTransaction();
+            User user = findByEmail(userEmail);
+            updateUserProductList(user, product);
+            productDao.updateProductCount(product);
+            productDao.updateProductUserList(product,user);
+            session.getTransaction().commit();
+            session.close();
+
+            return "Product " + id + " has been added to User.";
+        }else {
+
+            return "No Authentication Token Found. :(";
+        }
+
     }
 
 
