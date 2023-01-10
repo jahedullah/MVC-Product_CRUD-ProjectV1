@@ -1,5 +1,6 @@
 package com.Jahedullah.ProjectV1.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Product {
     private long price;
     private int productCount;
     @ManyToMany(mappedBy = "productList",fetch = FetchType.EAGER)
+    @JsonBackReference
     private List<User> userList;
 
 //    @Override

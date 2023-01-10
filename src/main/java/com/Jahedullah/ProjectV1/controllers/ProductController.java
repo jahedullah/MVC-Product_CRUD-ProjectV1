@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.controllers;
 
 import com.Jahedullah.ProjectV1.string.PRODUCT_URL;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,25 +12,21 @@ import com.Jahedullah.ProjectV1.model.dao.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/Products", method = RequestMethod.GET)
+@RequiredArgsConstructor
+@RequestMapping(value = "/Products")
 public class ProductController {
-    @Autowired
-    private ProductDao productDao;
 
-    @GetMapping(value = "/hi")
-    public String showPostman() {
-        return "Hey, I am the postman. the new Buddy.";
-    }
+    private final ProductDao productDao;
 
     @GetMapping(value = PRODUCT_URL.PRODUCT_WITH_ID)
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_USER')") // Pre Authorizing. This is a substitute of Antmatcher.
-    public ResponseEntity<Product> getProducts(@PathVariable int courseId) {
+    public ResponseEntity<Product> getProducts(@PathVariable int productId) {
 
-        Product product = productDao.getProduct(courseId);
+        Product product = productDao.getProduct(productId);
         return ResponseEntity.ok(product);
     }
 
-    @GetMapping(value = PRODUCT_URL.PRODUCT_LIST)
+    @GetMapping()
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_USER')") // Pre Authorizing. This is a substitute of Antmatcher.
     public ResponseEntity<List<Product>> getProductsList() {
 
@@ -46,8 +43,8 @@ public class ProductController {
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
 //    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
-    public String updateProduct(@PathVariable int courseId, @RequestBody Product productToUpdate) {
-        Product productCatch = productDao.getProduct(courseId);
+    public String updateProduct(@PathVariable int productId, @RequestBody Product productToUpdate) {
+        Product productCatch = productDao.getProduct(productId);
         productCatch.setName(productToUpdate.getName());
         productCatch.setDescription(productToUpdate.getDescription());
         productCatch.setPrice(productToUpdate.getPrice());
@@ -57,9 +54,9 @@ public class ProductController {
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)
 //    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int courseId) {
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int productId) {
         try {
-            productDao.deleteProduct(courseId);
+            productDao.deleteProduct(productId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,14 +64,5 @@ public class ProductController {
 
     }
 
-    @GetMapping("/test/user")
-    public String userTest() {
-        return "I am a User";
-    }
-
-    @GetMapping("/test/admin")
-    public String adminTest() {
-        return "I am a Admin";
-    }
 }
 

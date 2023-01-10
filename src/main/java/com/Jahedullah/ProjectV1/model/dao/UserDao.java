@@ -19,4 +19,6 @@ public interface UserDao {
     void deleteByEmail(String email);
     String buyProductByID(int id, HttpServletRequest request);
     void updateUserProductList(User user, Product product);
+    List<Product> productsList(HttpServletRequest request);
+    void productsDeleteById(int pid, HttpServletRequest request);
 }

@@ -1,6 +1,7 @@
 package com.Jahedullah.ProjectV1.model.entity;
 
 import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,21 +34,22 @@ public class User implements UserDetails {
     private String usertype;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_prod_join", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+    @JsonManagedReference
     private List<Product> productList;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", mobilenumber=" + mobilenumber +
-                ", appUserRole=" + appUserRole +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", firstname='" + firstname + '\'' +
+//                ", lastname='" + lastname + '\'' +
+//                ", email='" + email + '\'' +
+//                ", mobilenumber=" + mobilenumber +
+//                ", appUserRole=" + appUserRole +
+//                '}';
+//    }
 
     /**
      * Returns the authorities granted to the user. Cannot return <code>null</code>.

@@ -2,11 +2,12 @@ package com.Jahedullah.ProjectV1.string;
 
 public class PRODUCT_URL {
 
-    public static final String PRODUCT_WITH_ID = "/WithId/{courseId}";
-    public static final String PRODUCT_LIST = "/List";
-    public static final String PRODUCT_ADD = "/Add";
-    public static final String PRODUCT_DELETE_BY_ID = "/Delete/{courseId}";
-    public static final String PRODUCT_UPDATE_BY_ID = "/Update/{courseId}";
+    public static final String PRODUCT_WITH_ID = "/{productId}";
+    public static final String PRODUCT_LIST = "";
+    public static final String PRODUCT_ADD = "";
+    public static final String PRODUCT_DELETE_BY_ID = "/{productId}";
+    public static final String PRODUCT_UPDATE_BY_ID = "/{productId}";
 
 
 }
+
