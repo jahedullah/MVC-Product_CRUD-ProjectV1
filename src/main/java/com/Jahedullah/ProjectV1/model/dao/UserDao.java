@@ -19,7 +19,7 @@ public interface UserDao {
     void deleteByEmail(String email);
     void deleteById(int uid);
 
-    String buyProductByID(int id, HttpServletRequest request);
+//    String buyProductByID(int id, HttpServletRequest request);
 
     void updateUserProductList(User user, Product product);
 

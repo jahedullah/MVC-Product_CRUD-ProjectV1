@@ -1,12 +1,12 @@
 package com.Jahedullah.ProjectV1.controllers;
 
-import com.Jahedullah.ProjectV1.model.dto.ProductRegisterRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.ProductRegisterResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateResponseDto;
 import com.Jahedullah.ProjectV1.string.PRODUCT_URL;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.Jahedullah.ProjectV1.model.entity.*;
@@ -36,8 +36,9 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ResponseEntity<ProductRegisterResponseDto> addProduct(@RequestBody
-                                                                 ProductRegisterRequestDto productRegisterRequestDto) {
+    public ResponseEntity<ProductRegisterResponseDto>
+    addProduct(@RequestBody
+               ProductRegisterRequestDto productRegisterRequestDto) {
         ProductRegisterResponseDto productRegisterResponseDto =
                 productDao.createProduct(productRegisterRequestDto);
         if (productRegisterResponseDto.getId() != 0) {
@@ -48,14 +49,19 @@ public class ProductController {
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
-    public String updateProduct(@PathVariable int productId,
-                                @RequestBody Product productToUpdate) {
-        Product productCatch = productDao.getProduct(productId);
-        productCatch.setName(productToUpdate.getName());
-        productCatch.setDescription(productToUpdate.getDescription());
-        productCatch.setPrice(productToUpdate.getPrice());
-        productDao.updateProduct(productCatch);
-        return "Product has been updated successfully";
+    public ResponseEntity<ProductUpdateResponseDto>
+    updateProduct(@PathVariable int productId,
+                  ProductUpdateRequestDto productUpdateRequestDto) {
+        ProductUpdateResponseDto productUpdateResponseDto =
+                productDao.updateProduct(productId, productUpdateRequestDto);
+        if (!productUpdateResponseDto.getName().equals("")){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+        }
+
+
+        return null;
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)

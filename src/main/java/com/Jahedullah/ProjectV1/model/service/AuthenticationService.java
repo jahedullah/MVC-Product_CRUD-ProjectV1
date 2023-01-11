@@ -1,8 +1,8 @@
 package com.Jahedullah.ProjectV1.model.service;
 
-import com.Jahedullah.ProjectV1.model.dto.AuthenticationRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.AuthenticationResponseDto;
-import com.Jahedullah.ProjectV1.model.dto.RegisterRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.AuthenticationDto.AuthenticationRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.AuthenticationDto.AuthenticationResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.UserRegisterDto.UserRegisterRequestDto;
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
@@ -32,7 +32,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponseDto register(RegisterRequestDto request, HttpServletResponse response) throws IOException {
+    public AuthenticationResponseDto register(UserRegisterRequestDto request, HttpServletResponse response) throws IOException {
         User user = null;
         List emailList = userDao.findAllEmail();
         if (!emailList.contains(request.getEmail())) {

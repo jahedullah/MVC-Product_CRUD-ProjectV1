@@ -110,27 +110,27 @@ public class UserDaoImpl implements UserDao {
         session.close();
     }
 
-    @Override
-    public String buyProductByID(int id, HttpServletRequest request) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        Product product = productDao.getProduct(id);
-        String accessToken = request.getHeader("Authorization");
-        if (accessToken != null) {
-            String jwt = accessToken.substring(7);
-            String userEmail = jwtService.extractUsername(jwt);
-            session.beginTransaction();
-            User user = findByEmail(userEmail);
-            updateUserProductList(user, product);
-            productDao.updateProductCount(product);
-            productDao.updateProductUserList(product, user);
-            session.getTransaction().commit();
-            session.close();
-
-            return "Product " + id + " has been added to User.";
-        } else {
-            return "No Authentication Token Found. :(";
-        }
-    }
+//    @Override
+//    public String buyProductByID(int id, HttpServletRequest request) {
+//        Session session = HibernateUtils.getSessionFactory().openSession();
+//        Product product = productDao.getProduct(id);
+//        String accessToken = request.getHeader("Authorization");
+//        if (accessToken != null) {
+//            String jwt = accessToken.substring(7);
+//            String userEmail = jwtService.extractUsername(jwt);
+//            session.beginTransaction();
+//            User user = findByEmail(userEmail);
+//            updateUserProductList(user, product);
+//            productDao.updateProductCount(product);
+//            productDao.updateProductUserList(product, user);
+//            session.getTransaction().commit();
+//            session.close();
+//
+//            return "Product " + id + " has been added to User.";
+//        } else {
+//            return "No Authentication Token Found. :(";
+//        }
+//    }
 
     public List<Product> productsList(HttpServletRequest request) {
         String accessToken = request.getHeader("Authorization");

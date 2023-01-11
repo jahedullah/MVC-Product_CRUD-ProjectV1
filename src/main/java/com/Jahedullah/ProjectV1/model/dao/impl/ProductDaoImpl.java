@@ -1,8 +1,10 @@
 package com.Jahedullah.ProjectV1.model.dao.impl;
 
 import com.Jahedullah.ProjectV1.model.dao.ProductDao;
-import com.Jahedullah.ProjectV1.model.dto.ProductRegisterRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.ProductRegisterResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateResponseDto;
 import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
@@ -46,6 +48,50 @@ public class ProductDaoImpl implements ProductDao {
         return ProductRegisterResponseDto.builder()
                 .build();
     }
+    //update product
+    public ProductUpdateResponseDto updateProduct(int productId, ProductUpdateRequestDto productUpdateRequestDto) {
+
+//            Product productToUpdate =
+//                    Product.builder()
+//                            .name(productUpdateRequestDto.getName())
+//                            .description(productUpdateRequestDto.getDescription())
+//                            .price(productUpdateRequestDto.getPrice())
+//                            .productCount(productUpdateRequestDto.getProductCount())
+//                            .build();
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        String query = "from Product where id = :id";
+        Query q = session.createQuery(query);
+        q.setParameter("id", productId);
+        Product productToUpdate = (Product) q.uniqueResult();
+            session.beginTransaction();
+            session.update(productToUpdate);
+            session.getTransaction().commit();
+            session.close();
+            return ProductUpdateResponseDto.builder()
+                    .name(productToUpdate.getName())
+                    .description(productToUpdate.getDescription())
+                    .price(productToUpdate.getPrice())
+                    .productCount(productToUpdate.getProductCount())
+                    .build();
+    }
+    // get the Single Product
+    @Override
+    public ProductUpdateResponseDto getProduct(int pid) {
+
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        Product product = session.get(Product.class, pid);
+        session.getTransaction().commit();
+        session.close();
+
+        return ProductUpdateResponseDto.builder()
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .productCount(product.getProductCount())
+                .build();
+
+    }
 
     //get all Products
     public List<Product> getProducts() {
@@ -71,25 +117,6 @@ public class ProductDaoImpl implements ProductDao {
 
     }
 
-    //get the Single Product
-    public Product getProduct(int pid) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        Product product = session.get(Product.class, pid);
-        session.getTransaction().commit();
-        session.close();
-
-        return product;
-    }
-
-    //update product
-    public void updateProduct(Product product) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(product);
-        session.getTransaction().commit();
-        session.close();
-    }
 
     public void updateProductCount(Product product) {
         Session session = HibernateUtils.getSessionFactory().openSession();
@@ -120,6 +147,7 @@ public class ProductDaoImpl implements ProductDao {
 
         return productNameList;
     }
+
 
 
 }

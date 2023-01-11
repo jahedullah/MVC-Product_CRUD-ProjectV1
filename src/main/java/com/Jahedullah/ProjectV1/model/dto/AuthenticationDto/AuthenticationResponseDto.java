@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.model.dto;
+package com.Jahedullah.ProjectV1.model.dto.AuthenticationDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

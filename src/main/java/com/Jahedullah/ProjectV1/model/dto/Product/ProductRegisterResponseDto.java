@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.model.dto;
+package com.Jahedullah.ProjectV1.model.dto.Product;
 
 import lombok.*;
 
