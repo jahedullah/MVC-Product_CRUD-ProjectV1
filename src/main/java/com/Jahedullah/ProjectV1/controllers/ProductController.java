@@ -1,5 +1,7 @@
 package com.Jahedullah.ProjectV1.controllers;
 
+import com.Jahedullah.ProjectV1.model.dto.ProductRegisterRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.ProductRegisterResponseDto;
 import com.Jahedullah.ProjectV1.string.PRODUCT_URL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +36,15 @@ public class ProductController {
     }
 
     @PostMapping()
-    public String addProduct(@RequestBody Product product) {
-        productDao.createProduct(product);
-        return "Product has been added successfully.";
+    public ResponseEntity<ProductRegisterResponseDto> addProduct(@RequestBody
+                                                                 ProductRegisterRequestDto productRegisterRequestDto) {
+        ProductRegisterResponseDto productRegisterResponseDto =
+                productDao.createProduct(productRegisterRequestDto);
+        if (productRegisterResponseDto.getId() != 0) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(productRegisterResponseDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)

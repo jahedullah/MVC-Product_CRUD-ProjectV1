@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.model.authDto;
+package com.Jahedullah.ProjectV1.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-    private String firstname;
-    private String lastname;
+public class AuthenticationRequestDto {
+
     private String email;
     private String password;
-    private Integer mobilenumber;
-    private String usertype;
 
 }

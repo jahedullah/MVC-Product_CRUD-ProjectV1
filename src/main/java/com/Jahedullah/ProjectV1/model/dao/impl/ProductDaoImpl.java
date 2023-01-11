@@ -1,9 +1,12 @@
 package com.Jahedullah.ProjectV1.model.dao.impl;
 
 import com.Jahedullah.ProjectV1.model.dao.ProductDao;
+import com.Jahedullah.ProjectV1.model.dto.ProductRegisterRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.ProductRegisterResponseDto;
 import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -11,16 +14,37 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository
+@Repository @RequiredArgsConstructor
 public class ProductDaoImpl implements ProductDao {
 
+
     //creating Products here
-    public void createProduct(Product product) {
-        Session session = HibernateUtils.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-        session.close();
+    public ProductRegisterResponseDto createProduct(ProductRegisterRequestDto
+                                      productRegisterRequestDto){
+        List productNameList = findAllProductName();
+        if(!productNameList.contains(productRegisterRequestDto.getName())) {
+            Product product = Product.builder()
+                    .name(productRegisterRequestDto.getName())
+                    .description(productRegisterRequestDto.getDescription())
+                    .price(productRegisterRequestDto.getPrice())
+                    .productCount(productRegisterRequestDto.getProductCount())
+                    .build();
+
+            Session session = HibernateUtils.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.save(product);
+            session.getTransaction().commit();
+            session.close();
+            return ProductRegisterResponseDto.builder()
+                    .id(product.getId())
+                    .name(product.getName())
+                    .description(product.getDescription())
+                    .price(product.getPrice())
+                    .productCount(product.getProductCount())
+                    .build();
+        }
+        return ProductRegisterResponseDto.builder()
+                .build();
     }
 
     //get all Products
@@ -84,6 +108,17 @@ public class ProductDaoImpl implements ProductDao {
         session.update(product);
         session.getTransaction().commit();
         session.close();
+    }
+    public List findAllProductName(){
+        Session session = HibernateUtils.getSessionFactory().openSession();
+        session.beginTransaction();
+        String query = "select name from Product";
+        Query q = session.createQuery(query);
+        ArrayList<String> productNameList = (ArrayList<String>) q.list();
+        session.getTransaction().commit();
+        session.close();
+
+        return productNameList;
     }
 
 

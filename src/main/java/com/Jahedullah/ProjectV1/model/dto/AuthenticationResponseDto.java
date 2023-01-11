@@ -1,4 +1,4 @@
-package com.Jahedullah.ProjectV1.model.authDto;
+package com.Jahedullah.ProjectV1.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
+public class AuthenticationResponseDto {
     private  String accessToken;
     private String refreshToken;
 }

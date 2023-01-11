@@ -1,8 +1,8 @@
 package com.Jahedullah.ProjectV1.model.service;
 
-import com.Jahedullah.ProjectV1.model.authDto.AuthenticationRequest;
-import com.Jahedullah.ProjectV1.model.authDto.AuthenticationResponse;
-import com.Jahedullah.ProjectV1.model.authDto.RegisterRequest;
+import com.Jahedullah.ProjectV1.model.dto.AuthenticationRequestDto;
+import com.Jahedullah.ProjectV1.model.dto.AuthenticationResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.RegisterRequestDto;
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
@@ -32,7 +32,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authManager;
 
-    public AuthenticationResponse register(RegisterRequest request, HttpServletResponse response) throws IOException {
+    public AuthenticationResponseDto register(RegisterRequestDto request, HttpServletResponse response) throws IOException {
         User user = null;
         List emailList = userDao.findAllEmail();
         if (!emailList.contains(request.getEmail())) {
@@ -85,14 +85,14 @@ public class AuthenticationService {
         response.setHeader("AccessToken", jwtAccessToken);
         response.setHeader("RefreshToken", jwtRefreshToken);
 
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
                 .build();
 
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request, HttpServletResponse response) {
+    public AuthenticationResponseDto authenticate(AuthenticationRequestDto request, HttpServletResponse response) {
         var user = userDao.findByEmail(request.getEmail());
         authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -106,7 +106,7 @@ public class AuthenticationService {
         // Adding these two token into response header.
         response.setHeader("AccessToken", jwtAccessToken);
         response.setHeader("RefreshToken", jwtRefreshToken);
-        return AuthenticationResponse.builder()
+        return AuthenticationResponseDto.builder()
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
                 .build();
