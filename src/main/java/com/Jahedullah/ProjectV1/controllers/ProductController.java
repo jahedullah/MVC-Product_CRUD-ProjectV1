@@ -51,12 +51,15 @@ public class ProductController {
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
     public ResponseEntity<ProductUpdateResponseDto>
     updateProduct(@PathVariable int productId,
-                  @RequestBody ProductUpdateRequestDto productUpdateRequestDto) {
-        ProductUpdateResponseDto productUpdateResponseDto =
-                productDao.updateProduct(productId, productUpdateRequestDto);
+                  @RequestBody ProductUpdateRequestDto productUpdateRequestDto) throws NullPointerException  {
+        try {
+            ProductUpdateResponseDto productUpdateResponseDto =
+                    productDao.updateProduct(productId, productUpdateRequestDto);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
-
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
+        }catch (NullPointerException nullPointerException){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        }
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)
