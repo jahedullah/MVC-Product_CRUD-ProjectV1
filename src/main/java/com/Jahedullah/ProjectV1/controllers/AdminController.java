@@ -2,7 +2,6 @@ package com.Jahedullah.ProjectV1.controllers;
 
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.string.ADMIN_URL;
-import com.Jahedullah.ProjectV1.string.USER_URL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,7 @@ public class AdminController {
     private UserDao userDao;
 
     @DeleteMapping(ADMIN_URL.USER_DELETE_BY_EMAIL)
-    public ResponseEntity<HttpStatus> userDelete(@PathVariable String email){
+    public ResponseEntity<HttpStatus> userDelete(@PathVariable String email) {
         try {
             userDao.deleteByEmail(email);
             return new ResponseEntity<>(HttpStatus.OK);

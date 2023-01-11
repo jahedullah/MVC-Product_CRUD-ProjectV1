@@ -20,7 +20,6 @@ public class ProductController {
     private final ProductDao productDao;
 
     @GetMapping(value = PRODUCT_URL.PRODUCT_WITH_ID)
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_USER')") // Pre Authorizing. This is a substitute of Antmatcher.
     public ResponseEntity<Product> getProducts(@PathVariable int productId) {
 
         Product product = productDao.getProduct(productId);
@@ -28,22 +27,19 @@ public class ProductController {
     }
 
     @GetMapping()
-//    @PreAuthorize("hasAnyRole('ROLE_ADMIN, ROLE_USER')") // Pre Authorizing. This is a substitute of Antmatcher.
     public ResponseEntity<List<Product>> getProductsList() {
 
         List<Product> productsList = productDao.getProducts();
         return ResponseEntity.ok(productsList);
     }
 
-    @PostMapping(value = PRODUCT_URL.PRODUCT_ADD)
-//    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
+    @PostMapping()
     public String addProduct(@RequestBody Product product) {
         productDao.createProduct(product);
         return "Product has been added successfully.";
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
-//    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
     public String updateProduct(@PathVariable int productId, @RequestBody Product productToUpdate) {
         Product productCatch = productDao.getProduct(productId);
         productCatch.setName(productToUpdate.getName());
@@ -54,7 +50,6 @@ public class ProductController {
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)
-//    @PreAuthorize("hasAuthority('product:write')") // Pre Authorizing. This is a substitute of Antmatcher.
     public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int productId) {
         try {
             productDao.deleteProduct(productId);

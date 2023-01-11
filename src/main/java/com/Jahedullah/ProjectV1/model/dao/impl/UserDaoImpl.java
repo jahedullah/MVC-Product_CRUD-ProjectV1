@@ -7,18 +7,13 @@ import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.model.service.JwtService;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 
@@ -26,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserDaoImpl implements UserDao {
 
-     private final ProductDao productDao;
+    private final ProductDao productDao;
 
     private final JwtService jwtService;
 

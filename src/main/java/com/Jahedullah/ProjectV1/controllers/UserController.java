@@ -25,12 +25,14 @@ public class UserController {
         return userDao.buyProductByID(id, request);
 
     }
+
     @GetMapping(USER_URL.USER_PRODUCTS_LIST)
-    public ResponseEntity<List<Product>> productsList(HttpServletRequest request){
+    public ResponseEntity<List<Product>> productsList(HttpServletRequest request) {
         List<Product> productList = userDao.productsList(request);
         return ResponseEntity.ok(productList);
     }
-    @PatchMapping (USER_URL.USER_PRODUCTS_DELETE_BY_ID)
+
+    @PutMapping(USER_URL.USER_PRODUCTS_DELETE_BY_ID)
     public ResponseEntity<HttpStatus> productsDeleteById(@PathVariable int pid,
                                                          HttpServletRequest request) {
         try {

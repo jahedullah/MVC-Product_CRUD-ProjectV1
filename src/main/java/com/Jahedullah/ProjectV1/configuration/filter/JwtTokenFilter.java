@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -74,9 +76,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 }
 
             }
-        }catch (ExpiredJwtException ex){
+        } catch (ExpiredJwtException ex) {
             String refreshToken = request.getHeader("RefreshToken");
-            if(refreshToken != null){
+            if (refreshToken != null) {
                 response.setHeader("error", ex.getMessage());
                 response.setStatus(FORBIDDEN.value());
                 Map<String, String> error = new HashMap<>();

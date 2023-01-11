@@ -18,7 +18,9 @@ public interface ProductDao {
     Product getProduct(int pid);
 
     void updateProduct(Product product);
+
     void updateProductCount(Product product);
+
     void updateProductUserList(Product product, User user);
 
 }
