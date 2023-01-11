@@ -17,6 +17,7 @@ public interface UserDao {
     List findAllEmail();
 
     void deleteByEmail(String email);
+    void deleteById(int uid);
 
     String buyProductByID(int id, HttpServletRequest request);
 

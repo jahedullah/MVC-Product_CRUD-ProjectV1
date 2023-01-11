@@ -19,9 +19,9 @@ public class AdminController {
     private UserDao userDao;
 
     @DeleteMapping(ADMIN_URL.USER_DELETE_BY_EMAIL)
-    public ResponseEntity<HttpStatus> userDelete(@PathVariable String email) {
+    public ResponseEntity<HttpStatus> userDelete(@PathVariable int uid) {
         try {
-            userDao.deleteByEmail(email);
+            userDao.deleteById(uid);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

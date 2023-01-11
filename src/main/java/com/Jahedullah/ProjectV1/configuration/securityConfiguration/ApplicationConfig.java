@@ -25,7 +25,7 @@ public class ApplicationConfig {
             try {
                 return userDao.findByEmail(username);
             } catch (Exception e) {
-                throw new UsernameNotFoundException("Username is not Found.");
+                throw new UsernameNotFoundException("Username does not exist.");
             }
         };
 

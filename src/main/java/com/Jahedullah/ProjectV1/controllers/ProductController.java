@@ -40,7 +40,8 @@ public class ProductController {
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
-    public String updateProduct(@PathVariable int productId, @RequestBody Product productToUpdate) {
+    public String updateProduct(@PathVariable int productId,
+                                @RequestBody Product productToUpdate) {
         Product productCatch = productDao.getProduct(productId);
         productCatch.setName(productToUpdate.getName());
         productCatch.setDescription(productToUpdate.getDescription());

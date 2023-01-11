@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .antMatchers("/Users/User").permitAll()
                 .antMatchers("/Users").permitAll()
 
-                .antMatchers(DELETE, "/User/Delete").hasAnyRole(ADMIN.name(), SUPER_ADMIN.name())
+                .antMatchers(DELETE, "/Admin/**").hasAnyRole(ADMIN.name(), SUPER_ADMIN.name())
                 .antMatchers(POST, "/Users/Admin").hasRole(SUPER_ADMIN.name())
                 .antMatchers(DELETE, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
                 .antMatchers(PUT, "/Products/**").hasAuthority(PRODUCT_WRITE.getPermission())
