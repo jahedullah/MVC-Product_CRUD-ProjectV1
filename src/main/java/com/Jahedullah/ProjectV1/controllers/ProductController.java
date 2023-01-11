@@ -34,7 +34,9 @@ public class ProductController {
                ProductRegisterRequestDto productRegisterRequestDto) {
         ProductRegisterResponseDto productRegisterResponseDto =
                 productDao.createProduct(productRegisterRequestDto);
-        if (productRegisterResponseDto.getId() != 0) {
+        if(productRegisterRequestDto.getName() == null){
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
+        } else if (productRegisterResponseDto.getId() != 0){
             return ResponseEntity.status(HttpStatus.CREATED).body(productRegisterResponseDto);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
