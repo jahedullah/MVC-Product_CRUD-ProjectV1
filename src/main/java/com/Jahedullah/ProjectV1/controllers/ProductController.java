@@ -21,13 +21,6 @@ public class ProductController {
 
     private final ProductDao productDao;
 
-//    @GetMapping(value = PRODUCT_URL.PRODUCT_WITH_ID)
-//    public ResponseEntity<Product> getProducts(@PathVariable int productId) {
-//
-//        Product product = productDao.getProduct(productId);
-//        return ResponseEntity.ok(product);
-//    }
-
     @GetMapping()
     public ResponseEntity<List<Product>> getProductsList() {
 
