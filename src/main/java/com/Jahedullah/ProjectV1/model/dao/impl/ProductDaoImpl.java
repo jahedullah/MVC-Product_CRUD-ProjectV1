@@ -16,15 +16,16 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository @RequiredArgsConstructor
+@Repository
+@RequiredArgsConstructor
 public class ProductDaoImpl implements ProductDao {
 
 
     //creating Products here
     public ProductRegisterResponseDto createProduct(ProductRegisterRequestDto
-                                      productRegisterRequestDto){
+                                                            productRegisterRequestDto) {
         List productNameList = findAllProductName();
-        if(!productNameList.contains(productRegisterRequestDto.getName())) {
+        if (!productNameList.contains(productRegisterRequestDto.getName())) {
             Product product = Product.builder()
                     .name(productRegisterRequestDto.getName())
                     .description(productRegisterRequestDto.getDescription())
@@ -48,32 +49,36 @@ public class ProductDaoImpl implements ProductDao {
         return ProductRegisterResponseDto.builder()
                 .build();
     }
+
     //update product
     public ProductUpdateResponseDto updateProduct(int productId, ProductUpdateRequestDto productUpdateRequestDto) {
 
-//            Product productToUpdate =
-//                    Product.builder()
-//                            .name(productUpdateRequestDto.getName())
-//                            .description(productUpdateRequestDto.getDescription())
-//                            .price(productUpdateRequestDto.getPrice())
-//                            .productCount(productUpdateRequestDto.getProductCount())
-//                            .build();
         Session session = HibernateUtils.getSessionFactory().openSession();
-        String query = "from Product where id = :id";
-        Query q = session.createQuery(query);
-        q.setParameter("id", productId);
-        Product productToUpdate = (Product) q.uniqueResult();
-            session.beginTransaction();
-            session.update(productToUpdate);
-            session.getTransaction().commit();
-            session.close();
-            return ProductUpdateResponseDto.builder()
-                    .name(productToUpdate.getName())
-                    .description(productToUpdate.getDescription())
-                    .price(productToUpdate.getPrice())
-                    .productCount(productToUpdate.getProductCount())
-                    .build();
+        Product productToUpdate = session.get(Product.class, productId);
+        if(!(productUpdateRequestDto.getName() == null)) {
+            productToUpdate.setName(productUpdateRequestDto.getName());
+        }
+        if(!(productUpdateRequestDto.getDescription() == null)) {
+            productToUpdate.setDescription(productUpdateRequestDto.getDescription());
+        }
+        if(!(productUpdateRequestDto.getPrice() == 0)) {
+            productToUpdate.setPrice(productUpdateRequestDto.getPrice());
+        }
+        if(!(productUpdateRequestDto.getProductCount() == 0)) {
+            productToUpdate.setProductCount(productUpdateRequestDto.getProductCount());
+        }
+        session.beginTransaction();
+        session.update(productToUpdate);
+        session.getTransaction().commit();
+        session.close();
+        return ProductUpdateResponseDto.builder()
+                .name(productToUpdate.getName())
+                .description(productToUpdate.getDescription())
+                .price(productToUpdate.getPrice())
+                .productCount(productToUpdate.getProductCount())
+                .build();
     }
+
     // get the Single Product
     @Override
     public ProductUpdateResponseDto getProduct(int pid) {
@@ -136,7 +141,8 @@ public class ProductDaoImpl implements ProductDao {
         session.getTransaction().commit();
         session.close();
     }
-    public List findAllProductName(){
+
+    public List findAllProductName() {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         String query = "select name from Product";
@@ -147,7 +153,6 @@ public class ProductDaoImpl implements ProductDao {
 
         return productNameList;
     }
-
 
 
 }

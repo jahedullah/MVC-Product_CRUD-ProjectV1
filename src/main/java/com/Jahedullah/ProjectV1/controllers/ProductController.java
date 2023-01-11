@@ -21,12 +21,12 @@ public class ProductController {
 
     private final ProductDao productDao;
 
-    @GetMapping(value = PRODUCT_URL.PRODUCT_WITH_ID)
-    public ResponseEntity<Product> getProducts(@PathVariable int productId) {
-
-        Product product = productDao.getProduct(productId);
-        return ResponseEntity.ok(product);
-    }
+//    @GetMapping(value = PRODUCT_URL.PRODUCT_WITH_ID)
+//    public ResponseEntity<Product> getProducts(@PathVariable int productId) {
+//
+//        Product product = productDao.getProduct(productId);
+//        return ResponseEntity.ok(product);
+//    }
 
     @GetMapping()
     public ResponseEntity<List<Product>> getProductsList() {
@@ -51,17 +51,12 @@ public class ProductController {
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
     public ResponseEntity<ProductUpdateResponseDto>
     updateProduct(@PathVariable int productId,
-                  ProductUpdateRequestDto productUpdateRequestDto) {
+                  @RequestBody ProductUpdateRequestDto productUpdateRequestDto) {
         ProductUpdateResponseDto productUpdateResponseDto =
                 productDao.updateProduct(productId, productUpdateRequestDto);
-        if (!productUpdateResponseDto.getName().equals("")){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
-        }
 
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
 
-        return null;
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)

@@ -20,11 +20,11 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
-    @PutMapping(USER_URL.USER_BUY_PRODUCT_BY_ID)
-    public String buyProduct(@PathVariable int id, HttpServletRequest request) {
-        return userDao.buyProductByID(id, request);
-
-    }
+//    @PutMapping(USER_URL.USER_BUY_PRODUCT_BY_ID)
+//    public String buyProduct(@PathVariable int id, HttpServletRequest request) {
+//        return userDao.buyProductByID(id, request);
+//
+//    }
 
     @GetMapping(USER_URL.USER_PRODUCTS_LIST)
     public ResponseEntity<List<Product>> productsList(HttpServletRequest request) {

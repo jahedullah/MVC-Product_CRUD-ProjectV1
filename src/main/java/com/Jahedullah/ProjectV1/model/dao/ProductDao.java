@@ -27,7 +27,7 @@ public interface ProductDao {
 
     void updateProductUserList(Product product, User user);
     List findAllProductName();
-    List findAllProductId();
+
 
 
 }
