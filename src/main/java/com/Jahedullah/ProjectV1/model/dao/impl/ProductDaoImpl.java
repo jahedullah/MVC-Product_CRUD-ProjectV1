@@ -4,7 +4,7 @@ import com.Jahedullah.ProjectV1.model.dao.ProductDao;
 import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterRequestDto;
 import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterResponseDto;
 import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.ProductDto;
 import com.Jahedullah.ProjectV1.model.entity.Product;
 import com.Jahedullah.ProjectV1.model.entity.User;
 import com.Jahedullah.ProjectV1.utils.HibernateUtils;
@@ -54,7 +54,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //update product
-    public ProductUpdateResponseDto updateProduct(int productId, ProductUpdateRequestDto productUpdateRequestDto) {
+    public ProductDto updateProduct(int productId, ProductUpdateRequestDto productUpdateRequestDto) {
 
         Session session = HibernateUtils.getSessionFactory().openSession();
         Product productToUpdate = session.get(Product.class, productId);
@@ -74,7 +74,7 @@ public class ProductDaoImpl implements ProductDao {
         session.update(productToUpdate);
         session.getTransaction().commit();
         session.close();
-        return ProductUpdateResponseDto.builder()
+        return ProductDto.builder()
                 .id(productToUpdate.getId())
                 .name(productToUpdate.getName())
                 .description(productToUpdate.getDescription())
@@ -115,7 +115,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //get all Products
-    public List<ProductUpdateResponseDto> getProducts() {
+    public List<ProductDto> getProducts() {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -124,11 +124,11 @@ public class ProductDaoImpl implements ProductDao {
         criteriaQuery.select(root);
         Query<Product> query = session.createQuery(criteriaQuery);
         List<Product> productList = query.getResultList();
-        List<ProductUpdateResponseDto> newProductList = new ArrayList<>();
+        List<ProductDto> newProductList = new ArrayList<>();
         productList.forEach(
                 (tempProduct) -> {
-                    ProductUpdateResponseDto productUpdateResponseDto
-                            = ProductUpdateResponseDto.builder()
+                    ProductDto productUpdateResponseDto
+                            = ProductDto.builder()
                             .id(tempProduct.getId())
                             .name(tempProduct.getName())
                             .description(tempProduct.getDescription())

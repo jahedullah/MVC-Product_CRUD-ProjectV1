@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import com.Jahedullah.ProjectV1.model.entity.*;
 import com.Jahedullah.ProjectV1.model.dao.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +21,11 @@ public class ProductController {
     private final ProductDao productDao;
 
     @GetMapping(PRODUCT_URL.PRODUCT_WITH_ID)
-    public ResponseEntity<ProductUpdateResponseDto> getSingleProduct(@PathVariable int productId) throws NullPointerException {
+    public ResponseEntity<ProductDto> getSingleProduct(@PathVariable int productId) throws NullPointerException {
 
         Optional<Product> product = Optional.ofNullable(productDao.getProduct(productId));
         if (product.isPresent()){
-            ProductUpdateResponseDto productUpdateResponseDto = ProductUpdateResponseDto.builder()
+            ProductDto productUpdateResponseDto = ProductDto.builder()
                     .id(product.get().getId())
                     .name(product.get().getName())
                     .description(product.get().getDescription())
@@ -40,8 +39,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<ProductUpdateResponseDto>> getProductsList() {
-        List<ProductUpdateResponseDto> productsList = productDao.getProducts();
+    public ResponseEntity<List<ProductDto>> getProductsList() {
+        List<ProductDto> productsList = productDao.getProducts();
 
 
         return ResponseEntity.ok(productsList);
@@ -65,11 +64,11 @@ public class ProductController {
     }
 
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
-    public ResponseEntity<ProductUpdateResponseDto>
+    public ResponseEntity<ProductDto>
     updateProduct(@PathVariable int productId,
                   @RequestBody ProductUpdateRequestDto productUpdateRequestDto) throws NullPointerException  {
         try {
-            ProductUpdateResponseDto productUpdateResponseDto =
+            ProductDto productUpdateResponseDto =
                     productDao.updateProduct(productId, productUpdateRequestDto);
 
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
