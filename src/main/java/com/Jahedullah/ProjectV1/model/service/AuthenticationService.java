@@ -5,7 +5,7 @@ import com.Jahedullah.ProjectV1.model.dto.AuthenticationDto.AuthenticationRespon
 import com.Jahedullah.ProjectV1.model.dto.UserRegisterDto.UserRegisterRequestDto;
 import com.Jahedullah.ProjectV1.model.dao.UserDao;
 import com.Jahedullah.ProjectV1.model.entity.User;
-import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
+import com.Jahedullah.ProjectV1.model.rolesAndPermissions.AppUserRole;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.var;

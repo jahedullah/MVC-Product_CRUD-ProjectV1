@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import static com.Jahedullah.ProjectV1.model.entity.permissions.AppUserPermission.PRODUCT_WRITE;
-import static com.Jahedullah.ProjectV1.model.entity.role.AppUserRole.*;
+import static com.Jahedullah.ProjectV1.model.rolesAndPermissions.AppUserPermission.PRODUCT_WRITE;
+import static com.Jahedullah.ProjectV1.model.rolesAndPermissions.AppUserRole.*;
 import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.http.HttpMethod.DELETE;
 import static org.springframework.http.HttpMethod.GET;

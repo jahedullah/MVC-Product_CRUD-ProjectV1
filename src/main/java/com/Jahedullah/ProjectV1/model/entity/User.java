@@ -1,16 +1,13 @@
 package com.Jahedullah.ProjectV1.model.entity;
 
-import com.Jahedullah.ProjectV1.model.entity.role.AppUserRole;
+import com.Jahedullah.ProjectV1.model.rolesAndPermissions.AppUserRole;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
