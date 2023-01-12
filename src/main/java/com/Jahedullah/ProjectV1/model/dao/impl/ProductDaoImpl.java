@@ -72,6 +72,7 @@ public class ProductDaoImpl implements ProductDao {
         session.getTransaction().commit();
         session.close();
         return ProductUpdateResponseDto.builder()
+                .id(productToUpdate.getId())
                 .name(productToUpdate.getName())
                 .description(productToUpdate.getDescription())
                 .price(productToUpdate.getPrice())
@@ -80,22 +81,34 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     // get the Single Product
-    @Override
-    public ProductUpdateResponseDto getProduct(int pid) {
+//    @Override
+//    public ProductUpdateResponseDto getProduct(int productId) {
+//
+//        Session session = HibernateUtils.getSessionFactory().openSession();
+//        session.beginTransaction();
+//        Product product = session.get(Product.class, productId);
+//        session.getTransaction().commit();
+//        session.close();
+//
+//        return ProductUpdateResponseDto.builder()
+//                .id(product.getId())
+//                .name(product.getName())
+//                .description(product.getDescription())
+//                .price(product.getPrice())
+//                .productCount(product.getProductCount())
+//                .build();
+//
+//    }
 
+    @Override
+    public Product getProduct(int productId) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-        Product product = session.get(Product.class, pid);
+        Product product = session.get(Product.class, productId);
         session.getTransaction().commit();
         session.close();
 
-        return ProductUpdateResponseDto.builder()
-                .name(product.getName())
-                .description(product.getDescription())
-                .price(product.getPrice())
-                .productCount(product.getProductCount())
-                .build();
-
+        return product;
     }
 
     //get all Products

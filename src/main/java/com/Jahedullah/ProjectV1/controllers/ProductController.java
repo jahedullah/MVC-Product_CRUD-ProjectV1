@@ -1,9 +1,6 @@
 package com.Jahedullah.ProjectV1.controllers;
 
-import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.Product.ProductRegisterResponseDto;
-import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateRequestDto;
-import com.Jahedullah.ProjectV1.model.dto.Product.ProductUpdateResponseDto;
+import com.Jahedullah.ProjectV1.model.dto.Product.*;
 import com.Jahedullah.ProjectV1.string.PRODUCT_URL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +10,8 @@ import com.Jahedullah.ProjectV1.model.entity.*;
 import com.Jahedullah.ProjectV1.model.dao.*;
 
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -20,6 +19,24 @@ import java.util.List;
 public class ProductController {
 
     private final ProductDao productDao;
+
+    @GetMapping(PRODUCT_URL.PRODUCT_WITH_ID)
+    public ResponseEntity<ProductUpdateResponseDto> getSingleProduct(@PathVariable int productId) throws NullPointerException {
+
+        Optional<Product> product = Optional.ofNullable(productDao.getProduct(productId));
+        if (product.isPresent()){
+            ProductUpdateResponseDto productUpdateResponseDto = ProductUpdateResponseDto.builder()
+                    .id(product.get().getId())
+                    .name(product.get().getName())
+                    .description(product.get().getDescription())
+                    .price(product.get().getPrice())
+                    .productCount(product.get().getProductCount())
+                    .build();
+            return ResponseEntity.ok(productUpdateResponseDto);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping()
     public ResponseEntity<List<Product>> getProductsList() {

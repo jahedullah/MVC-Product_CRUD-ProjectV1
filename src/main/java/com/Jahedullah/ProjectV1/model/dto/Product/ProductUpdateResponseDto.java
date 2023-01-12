@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Builder @Setter @Getter
 public class ProductUpdateResponseDto {
+    private int id;
     private String name;
     private String description;
     private double price;
