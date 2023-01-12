@@ -15,7 +15,7 @@ public interface ProductDao {
 
     ProductRegisterResponseDto createProduct(ProductRegisterRequestDto productRegisterRequestDto);
 
-    List<Product> getProducts();
+    List<ProductUpdateResponseDto> getProducts();
 
     void deleteProduct(int pid);
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.Jahedullah.ProjectV1.model.entity.*;
 import com.Jahedullah.ProjectV1.model.dao.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,10 +40,13 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Product>> getProductsList() {
+    public ResponseEntity<List<ProductUpdateResponseDto>> getProductsList() {
+        List<ProductUpdateResponseDto> productsList = productDao.getProducts();
 
-        List<Product> productsList = productDao.getProducts();
+
         return ResponseEntity.ok(productsList);
+
+
     }
 
     @PostMapping()

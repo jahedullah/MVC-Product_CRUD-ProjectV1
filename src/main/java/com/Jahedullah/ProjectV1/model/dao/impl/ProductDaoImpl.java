@@ -13,6 +13,9 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,15 +115,32 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //get all Products
-    public List<Product> getProducts() {
+    public List<ProductUpdateResponseDto> getProducts() {
         Session session = HibernateUtils.getSessionFactory().openSession();
         session.beginTransaction();
-        String query = "select id, name, price, productCount from Product";
-        Query q = session.createQuery(query);
-        ArrayList<Product> productList = (ArrayList<Product>) q.list();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
+        Root<Product> root = criteriaQuery.from(Product.class);
+        criteriaQuery.select(root);
+        Query<Product> query = session.createQuery(criteriaQuery);
+        List<Product> productList = query.getResultList();
+        List<ProductUpdateResponseDto> newProductList = new ArrayList<>();
+        productList.forEach(
+                (tempProduct) -> {
+                    ProductUpdateResponseDto productUpdateResponseDto
+                            = ProductUpdateResponseDto.builder()
+                            .id(tempProduct.getId())
+                            .name(tempProduct.getName())
+                            .description(tempProduct.getDescription())
+                            .price(tempProduct.getPrice())
+                            .productCount(tempProduct.getProductCount())
+                            .build();
+                    newProductList.add(productUpdateResponseDto);
+                }
+        );
         session.close();
 
-        return productList;
+        return newProductList;
 
     }
 
