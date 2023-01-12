@@ -24,7 +24,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> getSingleProduct(@PathVariable int productId) throws NullPointerException {
 
         Optional<Product> product = Optional.ofNullable(productDao.getProduct(productId));
-        if (product.isPresent()){
+        if (product.isPresent()) {
             ProductDto productUpdateResponseDto = ProductDto.builder()
                     .id(product.get().getId())
                     .name(product.get().getName())
@@ -33,7 +33,7 @@ public class ProductController {
                     .productCount(product.get().getProductCount())
                     .build();
             return ResponseEntity.ok(productUpdateResponseDto);
-        }else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
@@ -41,10 +41,7 @@ public class ProductController {
     @GetMapping()
     public ResponseEntity<List<ProductDto>> getProductsList() {
         List<ProductDto> productsList = productDao.getProducts();
-
-
         return ResponseEntity.ok(productsList);
-
 
     }
 
@@ -54,9 +51,9 @@ public class ProductController {
                ProductRegisterRequestDto productRegisterRequestDto) {
         ProductRegisterResponseDto productRegisterResponseDto =
                 productDao.createProduct(productRegisterRequestDto);
-        if(productRegisterRequestDto.getName() == null){
+        if (productRegisterRequestDto.getName() == null) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
-        } else if (productRegisterResponseDto.getId() != 0){
+        } else if (productRegisterResponseDto.getId() != 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(productRegisterResponseDto);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -66,26 +63,26 @@ public class ProductController {
     @PutMapping(value = PRODUCT_URL.PRODUCT_UPDATE_BY_ID)
     public ResponseEntity<ProductDto>
     updateProduct(@PathVariable int productId,
-                  @RequestBody ProductUpdateRequestDto productUpdateRequestDto) throws NullPointerException  {
+                  @RequestBody ProductUpdateRequestDto productUpdateRequestDto) throws NullPointerException {
         try {
-            ProductDto productUpdateResponseDto =
+            ProductDto productDto =
                     productDao.updateProduct(productId, productUpdateRequestDto);
 
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productUpdateResponseDto);
-        }catch (NullPointerException nullPointerException){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productDto);
+        } catch (NullPointerException nullPointerException) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
     }
 
     @DeleteMapping(value = PRODUCT_URL.PRODUCT_DELETE_BY_ID)
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable int productId) {
+    public ResponseEntity<ProductDto> deleteProduct(@PathVariable int productId) throws NullPointerException {
         try {
-            productDao.deleteProduct(productId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            ProductDto productDto =
+                    productDao.deleteProduct(productId);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(productDto);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.notFound().build();
         }
-
     }
 
 }

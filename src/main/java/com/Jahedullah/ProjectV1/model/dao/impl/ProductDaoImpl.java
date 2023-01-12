@@ -145,13 +145,21 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     //Deleting the Product
-    public void deleteProduct(int pid) {
+    public ProductDto deleteProduct(int pid) {
         Session session = HibernateUtils.getSessionFactory().openSession();
         Product product = session.get(Product.class, pid);
         session.beginTransaction();
         session.delete(product);
         session.getTransaction().commit();
         session.close();
+
+        return ProductDto.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .productCount(product.getProductCount())
+                .build();
 
     }
 

@@ -17,7 +17,7 @@ public interface ProductDao {
 
     List<ProductDto> getProducts();
 
-    void deleteProduct(int pid);
+    ProductDto deleteProduct(int pid);
 
 //    ProductUpdateResponseDto getProduct(int productId);
     Product getProduct(int productId);
